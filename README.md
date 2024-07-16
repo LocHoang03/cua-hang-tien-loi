@@ -26,11 +26,9 @@
 ## Hệ thống quản lý cửa hàng tiện lợi
 
 <h5>Mô tả dự án: </h5>
-<p>Ebook là một hệ thống ứng dụng đa nền tảng cho phép người dùng đọc sách điện tử (ebook) trực tuyến. Hệ thống này sẽ mở ra khả năng đọc sách trực tuyến qua giao diện web, đồng thời cung cấp một ứng dụng tiện lợi để quản lý sách một cách hiệu quả.</p>
+<p>NextStore là một hệ thống ứng dụng đa nền tảng cho phép người dùng quản lý cửa hàng tiện lợi trực tuyến. Hệ thống này mở ra khả năng quản lý cửa hàng qua giao diện web, đồng thời cung cấp một ứng dụng tiện lợi để quản lý sản phẩm, nhân viên, và các hoạt động kinh doanh một cách hiệu quả.</p>
 
-<p>Được truy cập thông qua mạng, người dùng sẽ có cơ hội trải nghiệm không gian đọc sách độc đáo với sự tiện ích và linh hoạt mà chỉ công nghệ có thể mang lại. Không còn cần phải mang theo sách giấy, không gian sách điện tử sẽ tiết kiệm không gian và mang đến trải nghiệm đọc sách linh hoạt hơn bao giờ hết. Từ những trang sách kinh điển cho đến những tác phẩm hiện đại, mọi thứ đều có thể được truy cập và đọc một cách thuận tiện. </p>
-<p>Song song với việc đọc sách trực tuyến, ứng dụng đi kèm cung cấp một giao diện quản lý tiện lợi. Người dùng có thể tổ chức và quản lý tài liệu sách của mình theo cách riêng biệt, từ việc đánh dấu, sắp xếp theo thể loại cho đến tìm kiếm nhanh bằng cách sử dụng các tiện ích tìm kiếm thông minh. Điều này mang lại sự tiện lợi và hiệu quả cho việc tìm kiếm và sử dụng tài liệu sách, từ đó khuyến khích sự học hỏi và nghiên cứu một cách linh hoạt và hiệu quả hơn.
-</p>
+<p>Người dùng sẽ có cơ hội trải nghiệm không gian mua sắm tiện ích. Không còn cần phải đến cửa hàng vật lý, không gian mua sắm trực tuyến sẽ tiết kiệm thời gian và mang đến trải nghiệm mua sắm linh hoạt hơn bao giờ hết. Từ những mặt hàng thiết yếu hàng ngày cho đến các sản phẩm đặc biệt, mọi thứ đều có thể được truy cập và mua sắm một cách thuận tiện.</p>
 
 ### Yêu cầu
 
@@ -95,18 +93,15 @@ thông tin đơn hàng đã mua, giỏ hàng, hóa đơn từng đơn hàng] | |
 #### APP
 
 <p>
-Quản lý sách
+Quản lý sản phẩm
 </p>
 <ul>
-<li>Thêm và cập nhật sách</li>
-<li>Tra cứu thông tin sách</li>
+<li>Thêm, xóa và cập nhật sản phẩm</li>
+<li>Tra cứu thông tin sản phẩm</li>
 </ul>
 <p>
-Quản lý thể loại và nhà xuất bản
+Quản lý thể loại sản phẩm: thêm, sửa, xóa
 </p>
-<ul>
-<li>Thêm và cập nhật </li>
-</ul>
 <p>
 Quản lý khách hàng
 </p>
@@ -115,28 +110,13 @@ Quản lý khách hàng
 <li>Tra cứu thông tin khách hàng</li>
 </ul>
 <p>
-Quản lý tin tức
-</p>
-<ul>
-<li>Thêm và cập nhật </li>
-<li>Duyệt tin tức </li>
-</ul>
-<p>
-Quản lý nhân viên và chức vụ
+Quản lý nhân viên
 </p>
 <ul>
 <li>Thêm và cập nhật </li>
 <li> Phân quyền nhân viên tùy theo chức vụ</li>
 <li> Tra cứu thông tin của nhân viên </li></li>
 </ul>
-<p>
-Báo cáo
-</p>
-<ul>
-<li>Sách được mau nhiều nhất trong tháng </li>
-<li> Sách đuợc Thêm vào yêu thích nhiều nhất</li></li>
-</ul>
-<p>
 Thống kê</p>
 <ul>
 <li>Doanh thu </li>
