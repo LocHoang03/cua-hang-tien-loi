@@ -2,10 +2,6 @@
 
 # Thành viên
 
-<h4>Tên nhóm: Sea  </h4>
-
-> > **Thầy Bùi Công Danh**
-
 # | STT | Họ tên | Chức vụ |
 
 | 1 | 2001215928 - Hoàng Phước Lộc | Nhóm trưởng  
@@ -30,6 +26,8 @@
 
 <p>Người dùng sẽ có cơ hội trải nghiệm không gian mua sắm tiện ích. Không còn cần phải đến cửa hàng vật lý, không gian mua sắm trực tuyến sẽ tiết kiệm thời gian và mang đến trải nghiệm mua sắm linh hoạt hơn bao giờ hết. Từ những mặt hàng thiết yếu hàng ngày cho đến các sản phẩm đặc biệt, mọi thứ đều có thể được truy cập và mua sắm một cách thuận tiện.</p>
 
+<p>Ứng dụng đi kèm cung cấp một giao diện quản lý tiện lợi. Người dùng có thể tổ chức và quản lý cửa hàng của mình: quản lý nhân viên, các sản phẩm liên quan cũng như thông tin lượng khách hàng mua sắm... Khuyến khích sự tối ưu hóa và phát triển kinh doanh một cách hiệu quả.</p>
+
 ### Yêu cầu
 
 <p>Web: MVC Nodejs</p>
@@ -38,13 +36,13 @@
 
 <p>Nghiệp vụ</p>
 
-| STT | Nghiệp vụ | Phân công | | --- |
------------------------------------------------------------------------------------------------------------------------------------
-| | | 1 | Tìm kiếm sản phẩm | | | 2 | Đăng nhập đăng ký | | | 3 | Xem thông tin
-sản phẩm [Trang chủ, trang xem toàn bộ sản phẩm(có bộ lọc),Xem chi tiết sản
-phẩm] | | | 4 | Quản lý thông tin tài khoản [Thông tin KH, thông tin tài khoản,
-thông tin đơn hàng đã mua, giỏ hàng, hóa đơn từng đơn hàng] | | | 5 | Mua hàng |
-| | 6 | Thanh toán | |
+## | STT | Nghiệp vụ | Phân công | | --- |
+
+Tìm kiếm sản phẩm ============== Đăng nhập đăng ký ============== Xem thông tin
+sản phẩm [Trang chủ, trang xem toàn bộ sản phẩm (có bộ lọc), Xem chi tiết sản
+phẩm] ============== Quản lý thông tin tài khoản [Thông tin KH, thông tin tài
+khoản, thông tin đơn hàng đã mua, giỏ hàng, hóa đơn từng đơn hàng]
+============== Mua hàng ============== Thanh toán ==============
 
 <p>App: Winform </p>
 <p>Ngôn ngữ: C# </p>

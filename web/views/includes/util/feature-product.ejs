@@ -1,0 +1,64 @@
+<div class="max-width product-feature">
+  <h2 class="product-feature__title"><%= title %></h2>
+  <ul class="product-feature__container">
+    <%if(products && products.length > 0) {%> <%
+    products.forEach(function(product) { %>
+    <li class="product-feature__content col-sm-3">
+      <img src="/<%= product.imageURL %>" class="product-feature__img" />
+
+      <div class="product-feature__title-price">
+        <div class="product-feature__title-product">
+          <h2><%= product.title%></h2>
+        </div>
+        <div class="product-feature__price-product">
+          <span>Giá: <%= product.price%>đ</span>
+        </div>
+      </div>
+      <div class="product-feature__form">
+        <%- include('../../includes/util/add-to-cart.ejs', {product : product, home: true, detail: false})
+        %>
+        <div class="product-feature__detail-product">
+          <a href="/detail-product/<%= product._id %>" class="product-feature__detail-link"> Chi tiết </a>
+        </div>
+      </form>
+    </li>
+    <% }) %> <% } %>
+    <li class="product-feature__content col-sm-3">
+      <img
+        src="/image/image3.jpg"
+        class="product-feature__img"
+        width="{200}"
+        height="{230}"
+      />
+
+      <div class="product-feature__title-product">
+        <h2>title</h2>
+      </div>
+      <div class="product-feature__price-product">
+        <span>Price</span>
+      </div>
+      <form class="product-feature__form">
+        <button class="product-feature__btn-add-cart">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            fill="currentColor"
+            class="bi bi-cart-check"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
+            />
+            <path
+              d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+            />
+          </svg>
+        </button>
+        <div class="product-feature__detail-product">
+          <a href="" class="product-feature__detail-link"> Chi tiết </a>
+        </div>
+      </form>
+    </li>
+  </ul>
+</div>

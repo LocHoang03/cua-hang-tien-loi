@@ -1,0 +1,57 @@
+<div class="header-top">
+  <div class="max-width header-top__container">
+    <div class="header-top__title">
+      <p>NextStore, Nơi bạn là thành viên của gia đình</p>
+    </div>
+    <div>
+      <ul class="header-top__list-auth">
+        <li class="header-top__item-auth">
+          <a class="header-top__link" href="/news"> Tin tức </a>
+        </li>
+        <li class="header-top__item-auth">
+          <a class="header-top__link" href="/contact"> Liên hệ </a>
+        </li>
+        <% if(!isAuthenticated) {%>
+        <li class="header-top__item-auth">
+          <a href="/auth/login" class="header-top__link"> Đăng nhập </a>
+        </li>
+        <li class="header-top__item-auth hover">
+          <a href="/auth/signup" class="header-top__link"> Đăng ký </a>
+        </li>
+        <% } else {%>
+        <li style="position: relative">
+          <div class="nav_user_info">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-person-circle"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+              />
+            </svg>
+            <p><%= name%></p>
+            <div class="nav-content-user">
+              <ul class="list-task-user">
+                <li><a href="/order">Đơn hàng</a></li>
+                <li><a href="/auth/change-password">Đổi mật khẩu</a></li>
+                <li>
+                  <form action="/auth/logout" method="post">
+                    <button type="submit">Đăng xuất</button>
+                   
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</div>

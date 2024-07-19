@@ -1,0 +1,26 @@
+<div class="header-bottom">
+  <div class="max-width header-bottom__container">
+    <ul class="header-bottom__listNav">
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/' ? 'active' : '' %>" href="/"> Trang chủ </a>
+      </li>
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/products' ? 'active' : '' %>" href="/products"> Sản phẩm </a>
+      </li>
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/news' ? 'active' : '' %>" href="/news"> Tin tức </a>
+      </li>
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/introduces' ? 'active' : '' %>" href="/introduces"> Về chúng tôi </a>
+      </li>
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/contact' ? 'active' : '' %>" href="/contact"> Liên hệ </a>
+      </li>
+      <% if(isAuthenticated && isAdmin) {%>
+      <li class="header-bottom__item-linkNav">
+        <a class="header-bottom__link <%= path === '/admin' ? 'active' : '' %>" href="/admin"> Trang Admin </a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</div>

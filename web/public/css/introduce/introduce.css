@@ -1,0 +1,222 @@
+/* nav-link */
+
+.introduce__container-divide {
+    display: flex;
+    justify-content: space-between;
+    margin: 4rem 0;
+}
+
+.divided {
+    margin: 0 auto;
+    width: 48%;
+    height: 10rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #bcf2ff;
+    color: #1486c7;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+
+.divided:hover, .divided:active, .addColor {
+    background-color: #1486c7;
+    color: white;
+
+}
+
+/* introduces */
+
+.introduces {
+    margin: 0 auto;
+}
+
+
+.introduces__title,.introduces__history-store-title {
+    color: #1486c7;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.introduces__border {
+    border: 3px solid #ccc;
+    width: 10rem;
+    margin: 2rem 0;
+}
+
+.introduces__paragraph {
+    margin-bottom: 2rem;
+}
+
+.introduces__paragraph p {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+
+
+
+.introduces__history-store-content{
+    margin-bottom: 1rem;
+}
+
+.introduces__history-store-content h3 {
+    font-size: 1.6rem;
+    color: #1486c7;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.introduces__history-store-content p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.4rem 0;
+}
+
+
+/* lời ngỏ */
+
+.preface {
+    margin: 0 auto;
+}
+
+.preface__content {
+    margin-bottom: 1.4rem;
+}
+
+.preface__content em {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.preface__content:last-child em{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+
+/* phương châm */
+
+.motto {
+    margin: 0 auto;
+}
+
+/* .row {
+    width: 50%;
+} */
+
+.motto__mission {
+    display: flex;
+    min-height: 350px;
+    background: #8dc73f;
+}
+
+.motto__mission h3 {
+    font-size: 2rem;
+    padding: 1rem 8rem 0 3rem;
+    color: white;
+}
+
+.motto__img {
+    width: 100%;
+    height: 100%;
+}
+
+.motto__vision {
+    margin-top: 2rem;
+    background-color: #f7a2c1;
+    min-height: 350px;
+
+}
+
+.motto__vision h3 {
+    font-size: 2rem;
+    color: white;
+    padding: 1rem 0 0 1rem;
+}
+
+.motto__vision h4 {
+    border-left: 2px solid #e2dede;
+    margin: 1rem 0 1rem 1rem;
+    font-size: 1.9rem;
+    color: white;
+    width: 80%;
+    padding-left:2rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.motto__cores {
+    display: flex;
+    background: #119ec5;
+    margin-top: 2rem;
+}
+
+.motto__cores-content {
+    margin: 2rem 0;
+    padding:0 2rem;
+}
+
+.motto__cores-content h3 {
+    color: white;
+    font-size: 2rem;
+}
+
+.motto__cores-content h4 {
+    font-size: 1.6rem;
+    color: white;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+
+.motto__cores-content ul {
+    list-style: circle;
+    margin-top: 1rem;
+    padding-left: 1rem;
+}
+.motto__cores-content ul li {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+}
+
+
+.motto__last-content {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.motto__intro-content, .motto__commit-content {
+    width: 48%;
+    background: #8bc53f;
+    min-height: 350px;
+    padding: 3rem 3rem;
+}
+
+.motto__commit-content {
+    background: #e2828e;
+}
+
+.motto__intro-content h3,.motto__commit-content h3 {
+    color: white;
+    font-size: 1.6rem;
+}
+
+.motto__intro-content ul,.motto__commit-content ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.motto__intro-content ul li,.motto__commit-content ul li {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+}
+

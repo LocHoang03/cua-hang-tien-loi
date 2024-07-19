@@ -1,0 +1,61 @@
+{
+  "mission": {
+      "title": "“Sứ mệnh của chúng tôi là mang cửa hàng NextStore đến gần hơn với mọi người và luôn tạo cho khách hàng cảm giác thoải mái, thân thiện như chính thành viên của gia đình mình.”"
+  },
+  "vision": {
+      "title": "Tầm nhìn",
+      "para": "Chúng tôi hứa hẹn sẽ đem lại một cuộc sống chất lượng tốt đẹp hơn nhằm đền đáp sự tin tưởng của tất cả mọi người ở mọi lứa tuổi, mọi khu vực, mọi quốc gia nơi NextStore có mặt. Ngoài ra, chúng tôi cũng không ngừng phấn đấu để trở thành một bộ phận không thể thiếu đối với xã hội."
+  },
+  "cores": {
+      "title": "Giá trị cốt lõi",
+      "para": "Gầy dựng lòng mến khách đối với khách hàng. Khách hàng luôn luôn được chào đón như một thành viên trong gia đình NextStore",
+      "list": [
+          {
+              "title": "Dịch vụ chuyên nghiệp đem lại nụ cười cho khách hàng mỗi ngày"
+          },
+          {
+              "title": "Cung cấp sản phẩm và dịch vụ tiện ích cho đời sống thường ngày"
+          },
+          {
+              "title": "Tạo không gian màu sắc sống động tại cửa hàng"
+          },
+          {
+              "title": "Đóng góp tích cực cho cộng đồng"
+          }
+      ]
+  },
+  "intro": {
+      "title": "Famimaship",
+      "list": [
+          {
+              "title": "1. Vượt trên cả sự mong đợi của khách hàng"
+          },
+          {
+              "title": "2. Xây dựng mối quan hệ tin tưởng, cùng nhau hợp tác và phát triển"
+          },
+          {
+              "title": "3. Luôn mài giũa cảm tính và trực giác của bản thân, làm cho nó ngày càng phong phú và nhạy bén"
+          },
+          {
+              "title": "4. Đương đầu với thử thách"
+          },
+          {
+              "title": "5. Luôn sống hoạt động ngay thẳng và chính trực"
+          }
+      ]
+  },
+  "commit": {
+      "title": "Cam kết của FamilyMart",
+      "list": [
+          {
+              "title": "1. Luôn tươi cười chào hỏi khách hàng"
+          },
+          {
+              "title": "2. Không để khách hàng chờ khi tính tiền"
+          },
+          {
+              "title": "3. Luôn thối tiền cho khách hàng đàng hoàng"
+          }
+      ]
+  }
+}

@@ -1,0 +1,82 @@
+
+.nav_user_info {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 0 5px 0 1rem;
+    transition: all .25s ease-in-out;
+
+}
+
+.nav_user_info p {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.nav_user_info svg{
+    background-color: white;
+    border-radius: 100%;
+    border: none;
+    margin-right: 0.3rem;
+}
+
+.nav_user_info p {
+    color: black;
+}
+
+.nav-content-user::before {
+    content: "";
+    position: absolute;
+    border-width: 40px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+    top: -50px;
+    right: 0px;
+}
+
+.nav-content-user {
+    background: white;
+    min-height: 50px;
+    width: 180px;
+    position: absolute;
+    top: 40px;
+    right: 6px;
+    display: none;
+}
+
+.list-task-user {
+    list-style: none;
+    padding: 0;
+}
+
+.list-task-user li {
+    text-align: left;
+    padding:10px 0px;
+
+}
+
+
+.list-task-user li a,.list-task-user li form button{
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    padding: 0;
+    margin-left: 20px;
+    border: none;
+}
+
+
+.list-task-user li:hover > a,.list-task-user li:hover button {
+    color: rgb(76, 248, 191);
+
+}
+
+.nav_user_info:hover .nav-content-user{
+    display: block;
+}

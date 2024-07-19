@@ -1,0 +1,46 @@
+<%- include('../../includes/util/head.ejs') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/header-footer/header.css">
+<link rel="stylesheet" href="/css/header-footer/footer.css">
+<link rel="stylesheet" href="/css/introduce/introduce.css">
+<link rel="stylesheet" href="/css/header-footer/nav-user.css">
+<link href="node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <main>
+        <%- include('../../includes/header/header.ejs') %>
+        <div class="introduces max-width">
+            <%- include('../../includes/introduce/nav-link.ejs') %>
+            <div class="introduces__content">
+              <h2 class="introduces__title">Về NextStore</h2>
+              <div class="introduces__border"></div>
+              <div class="introduces__paragraph">
+                <% arr1.forEach((arr, id) => { %>
+                  <p key="<%= id %>"><%= arr.title %></p>
+                <% }) %>
+              </div>
+              
+              <div class="introduces__history-store">
+                <h2 class="introduces__history-store-title">NextStore tại Việt Nam</h2>
+                <div class="introduces__border"></div>
+                <div>
+                  <% arr2.forEach((arr, id) => { %>
+                    <div class="introduces__history-store-content" key="<%= id %>">
+                      <h3><%= arr.title %></h3>
+                      <% arr.list.forEach((list, listId) => { %>
+                        <p key="<%= listId %>"><%= list.title %></p>
+                      <% }) %>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+        <%- include('../../includes/footer/footer.ejs') %>
+    </main>
+<%- include('../../includes/util/end.ejs') %>

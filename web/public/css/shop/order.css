@@ -1,0 +1,138 @@
+.order {
+    margin: 0 auto;
+    color: #6f6e6e;
+}
+
+.order__container {
+    margin-top: 3rem;
+}
+
+.order__list-order {
+
+}
+
+.order__item-list-order {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+}
+
+.order__info-order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 2rem;
+    margin-bottom: 0.2rem;
+    background-color: #fff;
+}
+
+.order__info-order h3 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.order__info-order a {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgb(34, 34, 255);
+    text-decoration: underline;
+
+}
+
+
+.order__info-product {
+}
+
+.order__list-item-info-product {
+    
+}
+
+.order__item-product {}
+
+.order__item-product-top {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 0.2rem;
+    padding-right: 2rem;
+}
+
+.order__contentImage {
+    flex: 1;
+    
+}
+
+.order__img {
+    width: 80px;
+    height: 80px;
+}
+
+.order__title-quantity{
+    width: 40%;
+    margin-left: 3rem;
+    color: #6f6e6e;
+}
+
+.order__title-quantity h3, .order__title-quantity h5 {
+    font-size: 1rem !important;
+}
+
+.order__price {
+    width: 40%;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.order__price  span{
+    color: #f7462e;
+    font-weight: 500;
+
+}
+
+.order__item-product-bottom {
+    background: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order__evaluate {
+    display: flex;
+    align-items: flex-end;
+    font-size: 1rem;
+    color:  #f7462e;
+    font-weight: 500;
+}
+
+.order__evaluate a {
+    text-decoration: underline;
+}
+
+.order__container-total-fee {
+    text-align: right;
+}
+
+.order__fee-transport, .order__total {
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.order__fee-transport span,.order__total span {
+    color: #f7462e;
+    font-weight: 500;
+}
+
+.order__form-repurchase {}
+
+.order__form-repurchase button {
+    border: none;
+    background: #f7462e;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5rem 2rem;
+    margin-top: 0.6rem;
+}
+
+.order__form-repurchase button:hover {
+    opacity: 0.7;
+}

@@ -1,0 +1,202 @@
+<%if(!adminEdit) {%> <%if(!searchProduct) { %>
+<div class="pagination">
+  <% if(hasPreviousPage) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %> <%}%>"
+    class="page-pagination"
+    >Trang trước</a
+  >
+  <% } %> <%if(currentPage !== 1) {%>
+  <a
+    href="/products<%= type ? type : '' %>/?page=1"
+    href="/products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=1<%}%>"
+    class="page-pagination"
+    >1</a
+  >
+  <% } %> <% if(previousPage >= 3) {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <% if(previousPage > 1) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %><%}%>"
+    class="page-pagination"
+    ><%= previousPage %></a
+  >
+  <% }%> <%if(currentPage >= 10) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    style="padding: 4px 11px"
+    ><%= currentPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    ><%= currentPage %></a
+  >
+  <% } %> <% if(nextPage < lastPage) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    ><%= nextPage %></a
+  >
+  <% }%> <% if(currentPage !== lastPage) {%> <% if((nextPage === 2 && nextPage +
+  1 < lastPage) || (nextPage + 1 !== lastPage && currentPage + 1 !== lastPage))
+  {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <%}%> <% if(currentPage !== lastPage) {%> <% if(lastPage >= 10) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    style="padding: 4px 11px"
+    ><%= lastPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    ><%= lastPage %></a
+  >
+  <% }%> <% } %> <% if(hasNextPage) {%>
+  <a
+    href="/products/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    >Trang sau</a
+  >
+  <% }%>
+</div>
+<%} else {%>
+<div class="pagination">
+  <% if(hasPreviousPage) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %> <%}%>"
+    class="page-pagination"
+    >Trang trước</a
+  >
+  <% } %> <%if(currentPage !== 1) {%>
+  <a
+    href="/search-products<%= type ? type : '' %>/?page=1"
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=1<%}%>"
+    class="page-pagination"
+    >1</a
+  >
+  <% } %> <% if(previousPage >= 3) {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <% if(previousPage > 1) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %><%}%>"
+    class="page-pagination"
+    ><%= previousPage %></a
+  >
+  <% }%> <%if(currentPage >= 10) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    style="padding: 4px 11px"
+    ><%= currentPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    ><%= currentPage %></a
+  >
+  <% } %> <% if(nextPage < lastPage) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    ><%= nextPage %></a
+  >
+  <% }%> <% if(currentPage !== lastPage) {%> <% if((nextPage === 2 && nextPage +
+  1 < lastPage) || (nextPage + 1 !== lastPage && currentPage + 1 !== lastPage))
+  {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <%}%> <% if(currentPage !== lastPage) {%> <% if(lastPage >= 10) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    style="padding: 4px 11px"
+    ><%= lastPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    ><%= lastPage %></a
+  >
+  <% }%> <% } %> <% if(hasNextPage) {%>
+  <a
+    href="/search-products/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    >Trang sau</a
+  >
+  <% }%>
+</div>
+<% } %> <%} else {%>
+<div class="pagination">
+  <% if(hasPreviousPage) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %> <%}%>"
+    class="page-pagination"
+    >Trang trước</a
+  >
+  <% } %> <%if(currentPage !== 1) {%>
+  <a
+    href="/admin<%= type ? type : '' %>/?page=1"
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=1<%}%>"
+    class="page-pagination"
+    >1</a
+  >
+  <% } %> <% if(previousPage >= 3) {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <% if(previousPage > 1) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= previousPage %> <% } else { %>?page=<%= previousPage %><%}%>"
+    class="page-pagination"
+    ><%= previousPage %></a
+  >
+  <% }%> <%if(currentPage >= 10) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    style="padding: 4px 11px"
+    ><%= currentPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= currentPage %> <% } else { %>?page=<%= currentPage %><%}%>"
+    class="page-pagination active-current"
+    ><%= currentPage %></a
+  >
+  <% } %> <% if(nextPage < lastPage) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    ><%= nextPage %></a
+  >
+  <% }%> <% if(currentPage !== lastPage) {%> <% if((nextPage === 2 && nextPage +
+  1 < lastPage) || (nextPage + 1 !== lastPage && currentPage + 1 !== lastPage))
+  {%>
+  <a class="page-pagination-no-click" onclick="return false">...</a>
+  <% }%> <%}%> <% if(currentPage !== lastPage) {%> <% if(lastPage >= 10) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    style="padding: 4px 11px"
+    ><%= lastPage %></a
+  >
+  <% } else {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= lastPage %> <% } else { %>?page=<%= lastPage %><%}%>"
+    class="page-pagination"
+    ><%= lastPage %></a
+  >
+  <% }%> <% } %> <% if(hasNextPage) {%>
+  <a
+    href="/admin/<%if(type) {%><%= type %>/?page=<%= nextPage %> <% } else { %>?page=<%= nextPage %><%}%>"
+    class="page-pagination"
+    >Trang sau</a
+  >
+  <% }%>
+</div>
+<%}%>

@@ -1,0 +1,74 @@
+.list-types__title {
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 1.4rem;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    padding-bottom: 1rem;
+}
+
+.list-types__container {}
+
+.list-types__types-container {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.list-types__name-types, .list-types__vn-types {
+    width: 35%;
+}
+
+.list-types__bold,.list-types__bold h2, .list-types__bold span {
+    font-weight: bold !important;
+}
+
+.list-types__action {
+    flex: 1;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.list-types__name-types h2{
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.list-types__vn-types span{
+    font-size: 1.3rem;
+    font-weight: 500;
+
+}
+
+.list-types__form-add {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+}
+
+.list-types__detail-container {
+    margin-right: 1rem;
+}
+
+.list-types__detail {}
+
+.list-types__form-delete {
+
+}
+
+.list-types__btn {
+    border:  none;
+    font-weight: 500;
+}
+
+.list-types__detail-container:hover a,
+ .list-types__form-delete:hover button {
+    text-decoration: underline;
+    color: blue;
+ }
