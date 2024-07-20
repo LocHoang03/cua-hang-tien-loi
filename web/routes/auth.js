@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth');
-const User = require('../models/user');
 const auth = require('../middleware/is-auth');
 const { body, check } = require('express-validator');
+const { connect, sql } = require('../models/connect');
 
 router.get('/login', authController.getLogin);
 router.get('/signup', authController.getSignUp);
@@ -18,7 +18,7 @@ router.post(
   [
     body(
       'oldPassword',
-      'Vui lòng nhập mật khẩu hiện tại chỉ có số và văn bản và ít nhất 6 ký tự.'
+      'Vui lòng nhập mật khẩu hiện tại chỉ có số và văn bản và ít nhất 6 ký tự.',
     )
       .isAlphanumeric()
       .withMessage()
@@ -26,7 +26,7 @@ router.post(
       .trim(),
     body(
       'newPassword',
-      'Vui lòng nhập mật khẩu mới chỉ có số và văn bản và ít nhất 6 ký tự.'
+      'Vui lòng nhập mật khẩu mới chỉ có số và văn bản và ít nhất 6 ký tự.',
     )
       .isAlphanumeric()
       .withMessage()
@@ -40,7 +40,7 @@ router.post(
     }),
   ],
   auth.isAuth,
-  authController.postChangePassword
+  authController.postChangePassword,
 );
 
 router.get('/new-password/:token', authController.getNewPassword);
@@ -50,7 +50,7 @@ router.post(
   [
     body(
       'password',
-      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.'
+      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.',
     )
       .isAlphanumeric()
       .withMessage()
@@ -63,7 +63,7 @@ router.post(
       return true;
     }),
   ],
-  authController.postNewPassword
+  authController.postNewPassword,
 );
 
 router.post(
@@ -74,7 +74,7 @@ router.post(
       .withMessage('Vui lòng nhập email!')
       .normalizeEmail(),
   ],
-  authController.postReset
+  authController.postReset,
 );
 
 router.post(
@@ -86,14 +86,14 @@ router.post(
       .normalizeEmail(),
     body(
       'password',
-      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.'
+      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.',
     )
       .isAlphanumeric()
       .withMessage()
       .isLength({ min: 6 })
       .trim(),
   ],
-  authController.postLogin
+  authController.postLogin,
 );
 
 router.post(
@@ -106,19 +106,22 @@ router.post(
     check('email')
       .isEmail()
       .withMessage('Vui lòng nhập email!')
-      .custom((value, { req }) => {
-        return User.findOne({ email: value }).then((user) => {
-          if (user) {
-            return Promise.reject(
-              'E-mail đã tồn tại, vui lòng chọn một email khác.'
-            );
-          }
-        });
+      .custom(async (value, { req }) => {
+        const pool = await connect;
+        const user = await pool
+          .request()
+          .input('userId', sql.Int, value)
+          .query(`SELECT * FROM USERS a WHERE USER_ID = @userId`);
+        if (user.recordset.length > 0) {
+          return Promise.reject(
+            'E-mail đã tồn tại, vui lòng chọn một email khác.',
+          );
+        }
       })
       .normalizeEmail(),
     body(
       'password',
-      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.'
+      'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.',
     )
       .isAlphanumeric()
       .withMessage()
@@ -131,7 +134,7 @@ router.post(
       return true;
     }),
   ],
-  authController.postSignup
+  authController.postSignup,
 );
 
 module.exports = router;

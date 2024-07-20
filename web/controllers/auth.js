@@ -1,18 +1,9 @@
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const crypto = require('crypto');
-
-const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
-
-const transporter = nodemailer.createTransport(
-  sgTransport({
-    auth: {
-      api_key: process.env.SENGRID_KEY,
-    },
-  })
-);
+const { connect, sql } = require('../models/connect');
+require('dotenv').config();
+const transporter = require('../config/mailConfig');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -42,14 +33,17 @@ exports.getSignUp = (req, res, next) => {
   });
 };
 
-exports.getNewPassword = (req, res, next) => {
-  console.log('params ps', req.params);
-  User.findOne({
-    resetToken: req.params.token,
-    tokenExpiration: { $gt: Date.now() },
-  })
-    .then((user) => {
-      console.log('user new ps: ', user);
+exports.getNewPassword = async (req, res, next) => {
+  try {
+    const pool = await connect;
+    const user = await pool
+      .request()
+      .input('token', sql.VarChar, req.params.token).query(`SELECT TOP 1 *
+            FROM USERS
+            WHERE RESET_TOKEN = @token
+            AND TOKEN_EXPIRATION > GETDATE()`);
+
+    if (user) {
       res.render('auth/new-password', {
         pageTitle: 'Mật khẩu mới',
         path: '/auth/new-password',
@@ -62,11 +56,10 @@ exports.getNewPassword = (req, res, next) => {
           userId: user._id.toString(),
         },
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      next(new Error(err));
-    });
+    }
+  } catch (error) {
+    next(new Error(error));
+  }
 };
 
 exports.getResetPassword = (req, res, next) => {
@@ -95,13 +88,11 @@ exports.getChangePassword = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log(email, password);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('error', errors.array());
     return res.status(422).render('auth/login', {
       pageTitle: 'Login',
       path: '/auth/login',
@@ -114,71 +105,58 @@ exports.postLogin = (req, res, next) => {
     });
   }
 
-  User.findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        return res.status(422).render('auth/login', {
-          pageTitle: 'Login',
-          path: '/auth/login',
-          errorMessage: 'Email hoặc mật khẩu không hợp lệ.',
-          validationErrors: errors.array(),
-          oldInput: {
-            email: req.body.email,
-            password: req.body.password,
-          },
-        });
-      }
-      bcrypt
-        .compare(password, user.password)
-        .then((result) => {
-          if (result) {
-            console.log('result: ', result);
-            req.session.user = user;
-            req.session.isLoggedIn = true;
-            return req.session.save((err) => {
-              console.error(err);
-              res.redirect('/');
-            });
-          } else {
-            return res.status(422).render('auth/login', {
-              pageTitle: 'Login',
-              path: '/auth/login',
-              errorMessage: 'Email hoặc mật khẩu không hợp lệ.',
-              validationErrors: errors.array(),
-              oldInput: {
-                email: req.body.email,
-                password: req.body.password,
-              },
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(422).render('auth/login', {
-            pageTitle: 'Login',
-            path: '/auth/login',
-            errorMessage: 'Email hoặc mật khẩu không hợp lệ.',
-            validationErrors: errors.array(),
-            oldInput: {
-              email: req.body.email,
-              password: req.body.password,
-            },
-          });
-        });
-    })
-    .catch((err) => {
-      next(new Error(err));
-    });
+  try {
+    const pool = await connect;
+    const user = await pool.request().input('email', sql.VarChar, email)
+      .query(`SELECT TOP 1 *
+            FROM USERS
+            WHERE EMAIL = @email`);
+    if (!user) {
+      return res.status(422).render('auth/login', {
+        pageTitle: 'Login',
+        path: '/auth/login',
+        errorMessage: 'Email hoặc mật khẩu không hợp lệ.',
+        validationErrors: errors.array(),
+        oldInput: {
+          email: req.body.email,
+          password: req.body.password,
+        },
+      });
+    }
+    const result = await bcrypt.compare(password, user.recordset[0].PASSWORD);
+    s;
+    if (result) {
+      console.log('result: ', result);
+      req.session.user = user.recordset[0];
+      req.session.isLoggedIn = true;
+      return req.session.save((err) => {
+        console.error(err);
+        res.redirect('/');
+      });
+    } else {
+      return res.status(422).render('auth/login', {
+        pageTitle: 'Login',
+        path: '/auth/login',
+        errorMessage: 'Email hoặc mật khẩu không hợp lệ.',
+        validationErrors: errors.array(),
+        oldInput: {
+          email: req.body.email,
+          password: req.body.password,
+        },
+      });
+    }
+  } catch (error) {
+    next(new Error(error));
+  }
 };
 
-exports.postSignup = (req, res, next) => {
+exports.postSignup = async (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('error', errors.array());
     return res.status(422).render('auth/signup', {
       pageTitle: 'Signup',
       path: '/auth/signup',
@@ -189,44 +167,47 @@ exports.postSignup = (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
-        // isAdmin: false
       },
     });
   }
-  bcrypt
-    .hash(password, 12)
-    .then((password) => {
-      const user = new User({
-        name: name,
-        email: email,
-        password: password,
-        isAdmin: false,
-        cart: {
-          items: [],
-        },
-      });
-      return user.save();
-    })
-    .then((result) => {
-      res.redirect('/auth/login');
-      return transporter.sendMail({
-        from: 'hoangphuocloc.phurieng@gmail.com',
-        to: email,
-        subject: 'Signup success',
-        html: '<h1> Congratulations, you have successfully registered an account </h1>',
-      });
-    })
-    .catch((err) => {
-      next(new Error(err));
+
+  try {
+    const hashPassword = await bcrypt.hash(password, 12);
+
+    const pool = await connect;
+    const user = await pool
+      .request()
+      .input('Name', sql.NVarChar, name)
+      .input('Email', sql.NVarChar, email)
+      .input('Password', sql.NVarChar, hashPassword)
+      .input('ROLE', sql.NVarChar, 'user').query(`
+      INSERT INTO USERS (NAME, EMAIL, PASSWORD, ROLE)
+      OUTPUT INSERTED.USER_ID AS UserId
+      VALUES (@Name, @Email, @Password, @ROLE)
+    `);
+
+    const userId = user.recordset[0].UserId;
+    await pool.request().input('UserId', sql.Int, userId).query(`
+        INSERT INTO CARTS (USER_ID)
+        VALUES (@UserId)
+      `);
+
+    res.redirect('/auth/login');
+    return transporter.sendMail({
+      from: `${process.env.EMAIL_USERNAME}`,
+      to: email,
+      subject: 'Signup success',
+      html: '<h1> Congratulations, you have successfully registered an account </h1>',
     });
+  } catch (error) {
+    console.log(error);
+    next(new Error(error));
+  }
 };
 
-exports.postChangePassword = (req, res, next) => {
-  console.log(req.user);
-
+exports.postChangePassword = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('error', errors.array());
     return res.status(422).render('auth/change-password', {
       pageTitle: 'Đổi mật khẩu',
       path: '/auth/change-password',
@@ -239,89 +220,89 @@ exports.postChangePassword = (req, res, next) => {
       },
     });
   }
-  let newUser;
-  User.findOne({
-    _id: req.user._id,
-  })
-    .then((user) => {
-      console.log('user new ps', user);
-      if (!user) {
-        return res.status(422).render('auth/change-password', {
-          pageTitle: 'Đổi mật khẩu',
-          path: '/auth/change-password',
-          errorMessage: 'Đã xảy ra lỗi vui lòng thực hiện lại sau!!',
-          validationErrors: errors.array(),
-          oldInput: {
-            oldPassword: req.body.oldPassword,
-            newPassword: req.body.newPassword,
-            newConfirmPassword: req.body.newConfirmPassword,
-          },
-        });
-      }
-      newUser = user;
-      bcrypt
-        .compare(req.body.oldPassword, user.password)
-        .then((result) => {
-          if (!result) {
-            return res.status(422).render('auth/change-password', {
-              pageTitle: 'Đổi mật khẩu',
-              path: 'auth/change-password',
-              errorMessage: 'Thông tin mật khẩu không hợp lệ.',
-              validationErrors: errors.array(),
-              oldInput: {
-                oldPassword: req.body.oldPassword,
-                newPassword: req.body.newPassword,
-                newConfirmPassword: req.body.newConfirmPassword,
-              },
-            });
-          }
-          console.log(result);
-          return bcrypt.hash(req.body.newPassword, 12);
-        })
-        .then((hashPW) => {
-          newUser.password = hashPW;
-          return newUser.save();
-        })
-        .then((result) => {
-          res.redirect('/');
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(422).render('auth/change-password', {
-            pageTitle: 'Đổi mật khẩu',
-            path: 'auth/change-password',
-            errorMessage: 'Thông tin mật khẩu không hợp lệ.',
-            validationErrors: errors.array(),
-            oldInput: {
-              oldPassword: req.body.oldPassword,
-              newPassword: req.body.newPassword,
-              newConfirmPassword: req.body.newConfirmPassword,
-            },
-          });
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-      next(new Error(err));
+
+  try {
+    const pool = await connect;
+    const result = await pool
+      .request()
+      .input('UserId', sql.Int, userId)
+      .query('SELECT * FROM USERS WHERE USER_ID = @UserId');
+
+    const user = result.recordset[0];
+
+    if (!user) {
+      return res.status(422).render('auth/change-password', {
+        pageTitle: 'Đổi mật khẩu',
+        path: '/auth/change-password',
+        errorMessage: 'Người dùng không tìm thấy.',
+        validationErrors: [],
+        oldInput: { oldPassword, newPassword, newConfirmPassword },
+      });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.Password);
+
+    if (!isMatch) {
+      return res.status(422).render('auth/change-password', {
+        pageTitle: 'Đổi mật khẩu',
+        path: '/auth/change-password',
+        errorMessage: 'Mật khẩu cũ không đúng.',
+        validationErrors: [],
+        oldInput: { oldPassword, newPassword, newConfirmPassword },
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    await pool
+      .request()
+      .input('UserId', sql.Int, userId)
+      .input('Password', sql.NVarChar, hashedPassword)
+      .query('UPDATE Users SET Password = @Password WHERE Id = @UserId');
+
+    res.redirect('/');
+  } catch (error) {
+    res.status(422).render('auth/change-password', {
+      pageTitle: 'Đổi mật khẩu',
+      path: '/auth/change-password',
+      errorMessage: 'Đã xảy ra lỗi vui lòng thực hiện lại sau!',
+      validationErrors: [],
+      oldInput: { oldPassword, newPassword, newConfirmPassword },
     });
+  }
 };
 
-exports.postReset = (req, res, next) => {
-  console.log('email -reset', req.body.email);
-  crypto.randomBytes(32, (err, buf) => {
-    if (err) {
-      console.log(err);
-      return res.redirect('/auth/reset');
-    }
-    const token = buf.toString('hex');
+exports.postReset = async (req, res, next) => {
+  const token = crypto.randomBytes(32).toString('hex');
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log('error', errors.array());
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render('auth/reset-password', {
+      pageTitle: 'Lấy lại mật khẩu',
+      path: '/auth/reset-password',
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+      oldInput: {
+        email: req.body.email,
+      },
+    });
+  }
+
+  try {
+    const pool = await connect;
+
+    const userResult = await pool
+      .request()
+      .input('Email', sql.NVarChar, req.body.email)
+      .query('SELECT * FROM USERS WHERE EMAIL = @Email');
+
+    const user = userResult.recordset[0];
+
+    if (!user) {
       return res.status(422).render('auth/reset-password', {
         pageTitle: 'Lấy lại mật khẩu',
         path: '/auth/reset-password',
-        errorMessage: errors.array()[0].msg,
+        errorMessage: 'Email chưa được đăng ký hoặc không tồn tại',
         validationErrors: errors.array(),
         oldInput: {
           email: req.body.email,
@@ -329,47 +310,35 @@ exports.postReset = (req, res, next) => {
       });
     }
 
-    User.findOne({ email: req.body.email })
-      .then((user) => {
-        if (!user) {
-          return res.status(422).render('auth/reset-password', {
-            pageTitle: 'Lấy lại mật khẩu',
-            path: '/auth/reset-password',
-            errorMessage: 'Email chưa được đăng ký hoặc không tồn tại',
-            validationErrors: errors.array(),
-            oldInput: {
-              email: req.body.email,
-            },
-          });
-        }
-        user.resetToken = token;
-        user.tokenExpiration = Date.now() + 900000;
-        return user.save();
-      })
-      .then((result) => {
-        res.redirect('/auth/login');
-        transporter.sendMail({
-          from: 'hoangphuocloc.phurieng@gmail.com',
-          to: req.body.email,
-          subject: 'Reset Password',
-          html: `
-            <p>You requested a password reset</p>
-            <p>Click this <a href="http://localhost:8080/auth/new-password/${token}">link</a> to set a new password.</p>
-          `,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        next(new Error(err));
-      });
-  });
+    await pool
+      .request()
+      .input('Email', sql.NVarChar, req.body.email)
+      .input('ResetToken', sql.NVarChar, token)
+      .input('TokenExpiration', sql.BigInt, Date.now() + 900000).query(`
+        UPDATE USERS
+        SET RESET_TOKEN = @ResetToken, TOKEN_EXPIRATION = @TokenExpiration
+        WHERE EMAIL = @Email
+      `);
+
+    await transporter.sendMail({
+      from: 'hoangphuocloc.phurieng@gmail.com',
+      to: req.body.email,
+      subject: 'Reset Password',
+      html: `
+        <p>You requested a password reset</p>
+        <p>Click this <a href="http://localhost:8080/auth/new-password/${token}">link</a> to set a new password.</p>
+      `,
+    });
+
+    res.redirect('/auth/login');
+  } catch (err) {
+    next(new Error(err));
+  }
 };
 
-exports.postNewPassword = (req, res, next) => {
-  console.log('postNewPassword', req.body);
+exports.postNewPassword = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('error', errors.array());
     return res.status(422).render('auth/new-password', {
       pageTitle: 'Mật khẩu mới',
       path: '/auth/new-password',
@@ -384,50 +353,59 @@ exports.postNewPassword = (req, res, next) => {
     });
   }
 
-  let newUser;
-  User.findOne({
-    resetToken: req.body.token,
-    _id: req.body.userId,
-    tokenExpiration: { $gt: Date.now() },
-  })
-    .then((user) => {
-      console.log('user new ps', user);
-      if (!user) {
-        return res.status(422).render('auth/new-password', {
-          pageTitle: 'Mật khẩu mới',
-          path: '/auth/new-password',
-          errorMessage: 'Người dùng không tồn tại !!',
-          validationErrors: errors.array(),
-          oldInput: {
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword,
-            token: req.body.token,
-            userId: req.body.userId,
-          },
-        });
-      }
-      newUser = user;
-      return bcrypt.hash(req.body.password, 12);
-    })
-    .then((hashPW) => {
-      (newUser.password = hashPW),
-        (newUser.resetToken = undefined),
-        (newUser.tokenExpiration = undefined);
-      return newUser.save();
-    })
-    .then((result) => {
-      res.redirect('/auth/login');
-    })
-    .catch((err) => {
-      console.log(err);
-      next(new Error(err));
-    });
+  try {
+    const pool = await connect;
+
+    const result = await pool
+      .request()
+      .input('ResetToken', sql.NVarChar, req.body.token)
+      .input('UserId', sql.Int, req.body.userId)
+      .input('CurrentDate', sql.BigInt, Date.now()).query(`
+        SELECT * FROM USERS
+        WHERE RESET_TOKEN = @ResetToken
+          AND USER_ID = @UserId
+          AND TOKEN_EXPIRATION > @CurrentDate
+      `);
+
+    const user = result.recordset[0];
+
+    if (!user) {
+      return res.status(422).render('auth/new-password', {
+        pageTitle: 'Mật khẩu mới',
+        path: '/auth/new-password',
+        errorMessage: 'Người dùng không tồn tại hoặc token không hợp lệ!',
+        validationErrors: errors.array(),
+        oldInput: {
+          password: req.body.password,
+          confirmPassword: req.body.confirmPassword,
+          token: req.body.token,
+          userId: req.body.userId,
+        },
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 12);
+
+    await pool
+      .request()
+      .input('UserId', sql.Int, req.body.userId)
+      .input('Password', sql.NVarChar, hashedPassword).query(`
+        UPDATE USERS
+        SET PASSWORD = @Password,
+            RESET_TOKEN = NULL,
+            TOKEN_EXPIRATION = NULL
+        WHERE USER_ID = @UserId
+      `);
+
+    res.redirect('/auth/login');
+  } catch (err) {
+    console.error(err);
+    next(new Error(err));
+  }
 };
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
-    console.log(err);
-    // next(new Error(err))
     res.redirect('/');
   });
 };

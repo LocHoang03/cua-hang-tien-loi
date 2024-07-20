@@ -1,4 +1,3 @@
-
 const Checkout = function (btn) {
   const lengthProductCart = document
     .querySelector('.cart__list-products')
@@ -17,7 +16,7 @@ const postDeleteAllCart = function (btn) {
   const sumPrice = document.querySelector('.checkout__sum-price');
   const feeTransport = document.querySelector('.checkout__fee-transport');
   const checkoutTotalSumPrice = document.querySelector(
-    '.checkout__total-sum-price'
+    '.checkout__total-sum-price',
   );
   var ul = document.querySelector('cart__list-products');
   const lengthProductCart = document
@@ -49,7 +48,6 @@ const postDeleteAllCart = function (btn) {
 
 const deleteProductItem = function (btn) {
   const productId = btn.parentNode.querySelector('[name="productId"]').value;
-  // const csrf = btn.parentNode.querySelector('[name="_csrf"]').value;
   const lengthProductCart = document
     .querySelector('.cart__list-products')
     .getElementsByTagName('li').length;
@@ -60,7 +58,7 @@ const deleteProductItem = function (btn) {
   const sumPrice = document.querySelector('.checkout__sum-price');
   const feeTransport = document.querySelector('.checkout__fee-transport');
   const checkoutTotalSumPrice = document.querySelector(
-    '.checkout__total-sum-price'
+    '.checkout__total-sum-price',
   );
   fetch('/delete-cart-item/' + productId, {
     method: 'DELETE',
@@ -106,7 +104,7 @@ const increaseProductItem = function (btn) {
   const sumPrice = document.querySelector('.checkout__sum-price');
   const feeTransport = document.querySelector('.checkout__fee-transport');
   const checkoutTotalSumPrice = document.querySelector(
-    '.checkout__total-sum-price'
+    '.checkout__total-sum-price',
   );
   fetch('/increase-quantity/' + productId, {
     method: 'PATCH',
@@ -143,7 +141,7 @@ const decreaseProductItem = function (btn) {
   const sumPrice = document.querySelector('.checkout__sum-price');
   const feeTransport = document.querySelector('.checkout__fee-transport');
   const checkoutTotalSumPrice = document.querySelector(
-    '.checkout__total-sum-price'
+    '.checkout__total-sum-price',
   );
   const lengthProductCart = document
     .querySelector('.cart__list-products')
