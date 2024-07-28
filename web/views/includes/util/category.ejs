@@ -14,9 +14,9 @@
             <% if (types) { %> <% types.forEach(function(type) { %>
             <li>
               <a
-                href="/products/<%= type.nametype %>"
-                class="<%= path1 === '/products/' + type.nametype ? 'active_category' : '' %>"
-                ><%= type.vntype %></a
+                href="/products/<%= type.FLAG %>"
+                class="<%= path1 === '/products/' + type.FLAG ? 'active_category' : '' %>"
+                ><%= type.NAMETYPE %></a
               >
             </li>
             <% }); %> <% } %>

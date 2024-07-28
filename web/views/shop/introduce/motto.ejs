@@ -1,0 +1,65 @@
+<%- include('../../includes/util/head.ejs') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/header-footer/header.css">
+<link rel="stylesheet" href="/css/header-footer/footer.css">
+<link rel="stylesheet" href="/css/introduce/introduce.css">
+<link rel="stylesheet" href="/css/header-footer/nav-user.css">
+<link href="node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <main>
+        <%- include('../../includes/header/header.ejs') %>
+        <div class="motto max-width">
+            <%- include('../../includes/introduce/nav-link.ejs') %>
+            <div class="motto__mission">
+              <div class="col-sm-6">
+                <h3><%= motto.mission.title %></h3>
+              </div>
+              <div class="col-sm-6">
+                <img alt='store' src="/image/nextstore.jpg" class="motto__img" />
+              </div>
+            </div>
+            <div class="motto__vision">
+              <h3><%= motto.vision.title %></h3>
+              <h4><%= motto.vision.para %></h4>
+            </div>
+            <div class="motto__cores">
+              <div class="col-sm-6">
+                <img alt='store1' src="/image/nextstore1.jpg" class="motto__img" />
+              </div>
+              <div class="col-sm-6 motto__cores-content">
+                <h3><%= motto.cores.title %></h3>
+                <h4><%= motto.cores.para %></h4>
+                <ul>
+                  <% motto.cores.list.forEach((list, id) => { %>
+                    <li><%= list.title %></li>
+                  <% }); %>
+                </ul>
+              </div>
+            </div>
+            <div class="motto__last-content">
+              <div class="motto__intro-content">
+                <h3><%= motto.intro.title %></h3>
+                <ul>
+                  <% motto.intro.list.forEach((list, id) => { %>
+                    <li><%= list.title %></li>
+                  <% }); %>
+                </ul>
+              </div>
+              <div class="motto__commit-content">
+                <h3><%= motto.commit.title %></h3>
+                <ul>
+                  <% motto.commit.list.forEach((list, id) => { %>
+                    <li><%= list.title %></li>
+                  <% }); %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+        <%- include('../../includes/footer/footer.ejs') %>
+    </main>
+<%- include('../../includes/util/end.ejs') %>

@@ -124,11 +124,10 @@ exports.postLogin = async (req, res, next) => {
       });
     }
     const result = await bcrypt.compare(password, user.recordset[0].PASSWORD);
-    s;
     if (result) {
-      console.log('result: ', result);
       req.session.user = user.recordset[0];
       req.session.isLoggedIn = true;
+      res.cookie('sessionId', req.sessionID, { maxAge: 3600000 });
       return req.session.save((err) => {
         console.error(err);
         res.redirect('/');
@@ -399,7 +398,6 @@ exports.postNewPassword = async (req, res, next) => {
 
     res.redirect('/auth/login');
   } catch (err) {
-    console.error(err);
     next(new Error(err));
   }
 };

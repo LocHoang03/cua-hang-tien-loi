@@ -1,0 +1,67 @@
+<%- include('../includes/util/head.ejs') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/header-footer/header.css">
+<link rel="stylesheet" href="/css/header-footer/footer.css">
+<link rel="stylesheet" href="/css/shop/contact.css">
+<link rel="stylesheet" href="/css/header-footer/nav-user.css">
+<link href="node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <main>
+        <%- include('../includes/header/header.ejs') %>
+       <div class="contact max-width">
+        <div class="contact__banner"></div>
+        <p>&nbsp;</p>
+        <div class="contact__container">
+            <div class="contact__office">
+              <h2 class="contact__title-office">
+                <span>Văn Phòng NextStore</span>
+              </h2>
+      
+              <div class="contact__content-office">
+                <p class="contact__address">
+                  <strong>
+                    Tầng 8, Tòa nhà An Khánh, số 63 Phạm Ngọc Thạch, Phường Võ Thị
+                    Sáu, Quận 3, Tp. Hồ Chí Minh, Việt Nam.
+                  </strong>
+                </p>
+                <p class="contact__contact">
+                  <strong>Điện thoại:</strong> (028) 3930 5180 <br />
+                  <strong>Email:</strong> info@nextstore.vn <br />
+                  <strong>Giờ mở cửa:</strong> Sáng: 8:00 – 11:30, Chiều: 12:30 – 5:00
+                </p>
+                <p class="contact__response">
+                  Mọi thắc mắc hoặc góp ý về sản phẩm và dịch vụ, quý khách hàng vui
+                  lòng gửi e-mail về cho chúng tôi để nhận được sự hỗ trợ tốt nhất.
+                </p>
+              </div>
+            </div>
+            <div class="contact__message">
+              <h2 class="contact__title-office">
+                <span>Thông Điệp</span>
+              </h2>
+              <form class="contact__form-message">
+                <div class="contact__formcontrol">
+                  <label for="name">Tên</label>
+                  <input id="name" name="name" />
+                </div>
+                <div class="contact__formcontrol">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" />
+                </div>
+                <div class="contact__formcontrol">
+                  <label for="">Nội dung</label>
+                  <textarea placeholder='Nhập thông điệp bạn muốn gửi tới NextStore'></textarea>
+                </div>
+                <button class="contact__btn-send">Gửi</button>
+              </form>
+            </div>
+          </div>
+       </div>
+
+        <%- include('../includes/footer/footer.ejs') %>
+    </main>
+<%- include('../includes/util/end.ejs') %>

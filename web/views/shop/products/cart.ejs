@@ -1,0 +1,113 @@
+<%- include('../../includes/util/head.ejs') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/header-footer/header.css">
+<link rel="stylesheet" href="/css/header-footer/footer.css">
+<link rel="stylesheet" href="/css/header-footer/nav-user.css">
+<link rel="stylesheet" href="/css/shop/cart.css">
+<link href="node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <main>
+        <%- include('../../includes/header/header.ejs') %>
+        <div class="cart max-width">
+       
+            <div class="cart__container">
+                <div class="cart__container-list-product">
+                    <div class="cart__delete-products">
+                        <button className="" onclick="postDeleteAllCart(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                            </svg>
+                            <p>Xóa tất cả sản phẩm</p>
+                          </button>
+                    </div>
+                    <ul class="cart__list-products">
+                    <% if(products && products.length > 0) {%>
+                        <% products.map((product) => { %>
+                            <li class="cart__item-product">
+                                <div class="cart__contentImage">
+                                    <img
+                                    src="<%= product.IMAGE_URL %>"
+                                    class="cart__img"
+                                    />
+                                </div>
+                                <div class="cart__title">
+                                    <h3><%= product.TITLE %></h3>
+                                </div>
+                                <div class="cart__price"><%=product.PRICE%> đ</div>
+                                <div class="cart__change"> 
+                                    <div class="cart__change-container">
+                                        <div class="decrease-product">
+                                            <button onclick="decreaseProductItem(this)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                </svg>
+                                            </button> 
+                                            <input type="text" hidden name="productId" value="<%= product.PRODUCT_ID %>">
+                                        </div>
+                                        <span class="content-quantity">
+                                            <%= product.QUANTITY %>
+                                        </span>
+                                        <div class="increase-product">
+                                            <button onclick="increaseProductItem(this)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                </svg>
+                                            </button>
+                                            <input type="text" hidden name="productId" value="<%= product.PRODUCT_ID %>">
+                                        </div>
+                                           
+                                    </div>
+                                </div>
+                                <div class="cart__delete-product">
+                                    <button className="" onclick="deleteProductItem(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>
+                                        <input type="text" hidden name="productId" value="<%= product.PRODUCT_ID %>">
+                                    </button>
+                                </div>
+                            </li>
+                        <% })%>
+                        <% } else {%>
+                            <div class="no-product">
+                                <h3>Không có sản phẩm nào</h3>
+                            </div>
+                        <% } %>
+                        <div class="no-product1">
+                            <h3>Không có sản phẩm nào</h3>
+                        </div>
+                    </ul>
+                </div>
+                <div class="cart__container-checkout">
+                    <h3 class="checkout__title">Thông tin đơn hàng</h3>
+                    <div class="checkout__info-order">
+                      <div class="checkout__quantity-product">
+                        <p class="checkout__provisional">Tạm tính(<%= quantity %> sản phẩm)</p>
+                        <p class="checkout__sum-price"><%= price %> VND</p>
+                      </div>
+                      <div class="checkout__fee">
+                        <p>Phí vận chuyển</p>
+                        <p class="checkout__fee-transport"><%=count %> VND</p>
+                      </div>
+                    </div>
+                    <div class="checkout__confirm">
+                      <div class="checkout__total">
+                        <span>Tổng cộng</span>
+                        <p class="checkout__total-sum-price"><%= price + count %> VND</p>
+                      </div>
+                      <form action="/create-checkout-session" method="post">
+                        <button onclick="Checkout(this)">XÁC NHẬN GIỎ HÀNG</button>
+                      </form>
+                    </div>
+                  </div>
+            </div>
+        
+        </div>
+        <%- include('../../includes/footer/footer.ejs') %>
+    </main>
+<%- include('../../includes/util/end.ejs') %>
+<script src="/js/api.js"></script>
