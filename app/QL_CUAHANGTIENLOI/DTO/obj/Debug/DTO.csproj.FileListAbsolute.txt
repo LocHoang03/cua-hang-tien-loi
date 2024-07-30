@@ -1,0 +1,6 @@
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\bin\Debug\DTO.dll.config
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\bin\Debug\DTO.dll
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\bin\Debug\DTO.pdb
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\obj\Debug\DTO.csprojResolveAssemblyReference.cache
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\obj\Debug\DTO.dll
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DTO\obj\Debug\DTO.pdb

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.625" name="QL_CHTL">
+  <DataContextMoniker Name="/QL_CHTLDataContext" />
+  <nestedChildShapes>
+    <classShape Id="4c9709ee-dc2d-45fc-9fde-6deb07e02e82" absoluteBounds="6.25, 3.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/QL_CHTLDataContext/CART_PRODUCT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1ca8f72a-fcda-4083-a74b-95eb450b5163" absoluteBounds="6.265, 4.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19befa9f-7e1b-4480-841f-6eecf1c99cd9" absoluteBounds="3.5, 10, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/QL_CHTLDataContext/CART" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7becbe5d-63d1-4a1d-99c2-9d509ef6ddb5" absoluteBounds="3.515, 10.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1de0cbe5-1f5f-45d2-826d-0642d773f70a" absoluteBounds="6.25, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/QL_CHTLDataContext/ORDER_PRODUCT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c156ae10-cae7-425a-8102-8844058db8d1" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0bed3717-8fcf-4008-a82e-6f2d97e2b5de" absoluteBounds="3.5, 7.375, 2, 1.7708968098958335">
+      <DataClassMoniker Name="/QL_CHTLDataContext/ORDER" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b672cd1c-1848-4549-a7b6-e7b59bff5082" absoluteBounds="3.515, 7.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6109eb10-2f20-4457-a4d9-fd5ade192e64" absoluteBounds="3.5, 3.5, 2, 2.1554996744791661">
+      <DataClassMoniker Name="/QL_CHTLDataContext/PRODUCT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="193479b7-68ed-468a-a55c-5e609e6f90a3" absoluteBounds="3.515, 3.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4af700e2-31d7-414f-aa6a-cf021181a5f0" absoluteBounds="6.75, 6.375, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/QL_CHTLDataContext/SESSION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6126f5ff-95fa-4ff9-8f5a-e96afc426dc4" absoluteBounds="6.765, 6.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3010811c-1ba0-4300-a0fa-db2f40794870" absoluteBounds="6.75, 9.375, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/QL_CHTLDataContext/STAFF" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ff1845d0-27cf-42f5-b2bf-552bc4ec4e1e" absoluteBounds="6.765, 9.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0a71b67f-8d66-46e4-99d0-4fdd8e197b9b" absoluteBounds="0.75, 3.875, 2, 1.3862939453124996">
+      <DataClassMoniker Name="/QL_CHTLDataContext/TYPE_PRODUCT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8907e681-a4dd-4340-ba15-2d650d2cbf68" absoluteBounds="0.765, 4.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d700415e-e9d8-43c0-8dba-9dd57dc6b4ff" absoluteBounds="0.75, 7.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/QL_CHTLDataContext/USER" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7ded5344-370c-4cab-b0d1-6670ff68901f" absoluteBounds="0.765, 7.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 10); (5.875 : 9.625); (5.875 : 4.53929768880208); (5.97916666666667 : 4.53929768880208 : JumpStart); (6.14583333333333 : 4.53929768880208 : JumpEnd); (6.25 : 4.53929768880208)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/CART/CART_CART_PRODUCT" />
+      <nodes>
+        <classShapeMoniker Id="19befa9f-7e1b-4480-841f-6eecf1c99cd9" />
+        <classShapeMoniker Id="4c9709ee-dc2d-45fc-9fde-6deb07e02e82" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 7.4362992741887); (5.81607443490112 : 7.12022483928758 : JumpStart); (5.93392556509888 : 7.00237370908982 : JumpEnd); (6.0625 : 6.8737992741887); (6.0625 : 1.53929768880208); (6.25 : 1.53929768880208)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/ORDER/ORDER_ORDER_PRODUCT" />
+      <nodes>
+        <classShapeMoniker Id="0bed3717-8fcf-4008-a82e-6f2d97e2b5de" />
+        <classShapeMoniker Id="1de0cbe5-1f5f-45d2-826d-0642d773f70a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.08214884440104); (5.97916666666667 : 4.08214884440104 : JumpStart); (6.14583333333333 : 4.08214884440104 : JumpEnd); (6.25 : 4.08214884440104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/PRODUCT/PRODUCT_CART_PRODUCT" />
+      <nodes>
+        <classShapeMoniker Id="6109eb10-2f20-4457-a4d9-fd5ade192e64" />
+        <classShapeMoniker Id="4c9709ee-dc2d-45fc-9fde-6deb07e02e82" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 3.5); (4.5 : 1.96519903320312); (5.97916666666667 : 1.96519903320312 : JumpStart); (6.14583333333333 : 1.96519903320312 : JumpEnd); (6.25 : 1.96519903320312)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/PRODUCT/PRODUCT_ORDER_PRODUCT" />
+      <nodes>
+        <classShapeMoniker Id="6109eb10-2f20-4457-a4d9-fd5ade192e64" />
+        <classShapeMoniker Id="1de0cbe5-1f5f-45d2-826d-0642d773f70a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.56814697265625); (3.5 : 4.56814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/TYPE_PRODUCT/TYPE_PRODUCT_PRODUCT" />
+      <nodes>
+        <classShapeMoniker Id="0a71b67f-8d66-46e4-99d0-4fdd8e197b9b" />
+        <classShapeMoniker Id="6109eb10-2f20-4457-a4d9-fd5ade192e64" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 9.28049967447917); (1.75 : 10.5969962565104); (3.5 : 10.5969962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/USER/USER_CART" />
+      <nodes>
+        <classShapeMoniker Id="d700415e-e9d8-43c0-8dba-9dd57dc6b4ff" />
+        <classShapeMoniker Id="19befa9f-7e1b-4480-841f-6eecf1c99cd9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 8.26044840494792); (3.5 : 8.26044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/QL_CHTLDataContext/USER/USER_ORDER" />
+      <nodes>
+        <classShapeMoniker Id="d700415e-e9d8-43c0-8dba-9dd57dc6b4ff" />
+        <classShapeMoniker Id="0bed3717-8fcf-4008-a82e-6f2d97e2b5de" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
