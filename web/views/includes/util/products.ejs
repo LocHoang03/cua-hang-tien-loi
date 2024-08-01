@@ -6,17 +6,16 @@
     <% products.forEach(function(product) { %>
     <li class="list-product__product-container col-sm-4">
       <img
-        src="/<%= product.imageURL %>"
+        src="<%= product.IMAGE_URL %>"
         class="list-product__img"
         width="200"
-        height="230"
-      />
+        height="230" />
 
       <div class="list-product__title-product">
-        <h2><%= product.title %></h2>
+        <h2><%= product.TITLE %></h2>
       </div>
       <div class="list-product__price-product">
-        <span>Giá: <%= product.price %> đ</span>
+        <span>Giá: <%= formatCurrency(product.PRICE) %> VND</span>
       </div>
 
       <% if(adminEdit) {%>
@@ -24,35 +23,31 @@
         <div class="list-product__detail-container">
           <a
             href="/admin/edit-product/<%= product._id %>/?edit=true"
-            class="list-product__detail"
-          >
+            class="list-product__detail">
             Sửa
           </a>
         </div>
         <form
           action="/admin/delete-product"
           method="post"
-          class="list-product__form-delete"
-        >
+          class="list-product__form-delete">
           <button class="list-product__btn">Xóa</button>
           <input
             type="text"
             hidden
             name="productId"
-            value="<%= product._id %>"
-          />
+            value="<%= product._id %>" />
         </form>
       </div>
       <% } else {%>
       <div class="list-product__form-add">
-        <%- include('../../includes/util/add-to-cart.ejs', {product : product, home: false})
-        %>
+        <%- include('../../includes/util/add-to-cart.ejs', {product : product,
+        home: false}) %>
 
         <div class="list-product__detail-container">
           <a
-            href="/detail-product/<%= product._id %>"
-            class="list-product__detail"
-          >
+            href="/detail-product/<%= product.PRODUCT_ID %>"
+            class="list-product__detail">
             Chi tiết
           </a>
         </div>

@@ -1,47 +1,46 @@
-
-
-.category__container {}
-
-.category__content > h3 {
-    border-bottom: 3px solid #ccc;
-    padding-bottom: 0.5rem;
+.category__container {
 }
 
+.category__content > h3 {
+  border-bottom: 3px solid #ccc;
+  padding-bottom: 0.5rem;
+}
 
-.category__list-admin h3, .category__content-user h3 {
-    font-size: 1.4rem;
-    font-weight: bold;
+.category__list-admin h3,
+.category__content-user h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 .category__list-category {
-    margin-top: 2rem;
-    font-size: 1.2rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
 }
 .category__list-category > li {
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 0.6rem;
-    margin-top: 0.8rem;
-    color: black;
-    font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.6rem;
+  margin-top: 0.8rem;
+  color: black;
+  font-weight: bold;
 }
-
 
 .category__list-category > li > a:hover,
 .category__list-category > li > a:active,
 .category__list-category2 > li:hover > a,
 .category__list-category2 > li:active > a,
 .active_category {
-    color: rgb(55, 29, 253);
+  color: rgb(55, 29, 253);
 }
 
-.category__list-category2  {
-    margin-left: 2rem;
+.category__list-category2 {
+  margin-left: 2rem;
 }
 
 .category__list-category2 li {
-    border-top: 2px solid #ccc;
-    padding-top: 0.6rem;
-    color: black;
-    font-weight: 500;
-    margin-top: 0.8rem;
+  border-top: 2px solid #ccc;
+  padding-top: 0.6rem;
+  color: black;
+  font-weight: 500;
+  margin-top: 0.8rem;
+  font-size: 14px;
 }

@@ -1,4 +1,4 @@
-const Checkout = function (btn) {
+const Checkout = async function (btn) {
   const lengthProductCart = document
     .querySelector('.cart__list-products')
     .getElementsByTagName('li').length;
@@ -6,6 +6,9 @@ const Checkout = function (btn) {
     btn.disabled = true;
   } else {
     btn.disabled = false;
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    window.location.href = `${protocol}//${host}/get-checkout`;
   }
 };
 
@@ -29,7 +32,6 @@ const postDeleteAllCart = function (btn) {
       return result.json();
     })
     .then((data) => {
-      console.log(data);
       for (let i = 0; i < lengthProductCart.length; i++) {
         if (lengthProductCart[i] != null) {
           lengthProductCart[i].parentNode.removeChild(lengthProductCart[i]);
@@ -39,9 +41,9 @@ const postDeleteAllCart = function (btn) {
       const total = parseFloat(data.priceProd) + parseFloat(data.fee);
       textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
       provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-      sumPrice.innerText = `${data.priceProd} đ`;
-      feeTransport.innerText = `${data.fee} đ`;
-      checkoutTotalSumPrice.innerText = `${total} đ`;
+      sumPrice.innerText = `${data.priceProd} VND`;
+      feeTransport.innerText = `${data.fee} VND`;
+      checkoutTotalSumPrice.innerText = `${total} VND`;
       noProduct.style.display = 'flex';
     });
 };
@@ -62,32 +64,28 @@ const deleteProductItem = function (btn) {
   );
   fetch('/delete-cart-item/' + productId, {
     method: 'DELETE',
-    headers: {
-      // 'csrf-token': csrf,
-    },
+    headers: {},
   })
     .then((result) => {
       return result.json();
     })
     .then((data) => {
-      console.log(data);
-
       if (lengthProductCart < 2) {
         const total = parseFloat(data.priceProd) + parseFloat(data.fee);
         textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
         provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-        sumPrice.innerText = `${data.priceProd} đ`;
-        feeTransport.innerText = `${data.fee} đ`;
-        checkoutTotalSumPrice.innerText = `${total} đ`;
+        sumPrice.innerText = `${data.priceProd} VND`;
+        feeTransport.innerText = `${data.fee} VND`;
+        checkoutTotalSumPrice.innerText = `${total} VND`;
         itemProductCart.parentNode.removeChild(itemProductCart);
         noProduct.style.display = 'flex';
       } else {
         const total = parseFloat(data.priceProd) + parseFloat(data.fee);
         textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
         provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-        sumPrice.innerText = `${data.priceProd} đ`;
-        feeTransport.innerText = `${data.fee} đ`;
-        checkoutTotalSumPrice.innerText = `${total} đ`;
+        sumPrice.innerText = `${data.priceProd} VND`;
+        feeTransport.innerText = `${data.fee} VND`;
+        checkoutTotalSumPrice.innerText = `${total} VND`;
         itemProductCart.parentNode.removeChild(itemProductCart);
       }
     })
@@ -96,9 +94,7 @@ const deleteProductItem = function (btn) {
 
 const increaseProductItem = function (btn) {
   const productId = btn.parentNode.querySelector('[name="productId"]').value;
-  // const csrf = btn.parentNode.querySelector('[name="_csrf"]').value;
   const quantity = btn.parentNode.parentNode.querySelector('.content-quantity');
-  console.log(quantity);
   const textCart = document.getElementById('quantity-price');
   const provisional = document.querySelector('.checkout__provisional');
   const sumPrice = document.querySelector('.checkout__sum-price');
@@ -108,23 +104,19 @@ const increaseProductItem = function (btn) {
   );
   fetch('/increase-quantity/' + productId, {
     method: 'PATCH',
-    headers: {
-      // 'csrf-token': csrf,
-    },
+    headers: {},
   })
     .then((result) => {
       return result.json();
     })
     .then((data) => {
-      console.log('data', data);
       const total = parseFloat(data.priceProd) + parseFloat(data.fee);
-      console.log('total', total);
       quantity.innerText = data.quantity;
       textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
       provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-      sumPrice.innerText = `${data.priceProd} đ`;
-      feeTransport.innerText = `${data.fee} đ`;
-      checkoutTotalSumPrice.innerText = `${total} đ`;
+      sumPrice.innerText = `${data.priceProd} VND`;
+      feeTransport.innerText = `${data.fee} VND`;
+      checkoutTotalSumPrice.innerText = `${total} VND`;
     })
     .catch((err) => console.log(err));
 };
@@ -156,38 +148,34 @@ const decreaseProductItem = function (btn) {
       return result.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.quantity >= 1) {
         quantity.innerText = data.quantity;
         const total = parseFloat(data.priceProd) + parseFloat(data.fee);
-        console.log('total', total);
         quantity.innerText = data.quantity;
         textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
         provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-        sumPrice.innerText = `${data.priceProd} đ`;
-        feeTransport.innerText = `${data.fee} đ`;
-        checkoutTotalSumPrice.innerText = `${total} đ`;
+        sumPrice.innerText = `${data.priceProd} VND`;
+        feeTransport.innerText = `${data.fee} VND`;
+        checkoutTotalSumPrice.innerText = `${total} VND`;
       } else {
         if (lengthProductCart < 2) {
           const total = parseFloat(data.priceProd) + parseFloat(data.fee);
-          console.log('total', total);
           quantity.innerText = data.quantity;
           textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
           provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-          sumPrice.innerText = `${data.priceProd} đ`;
-          feeTransport.innerText = `${data.fee} đ`;
-          checkoutTotalSumPrice.innerText = `${total} đ`;
+          sumPrice.innerText = `${data.priceProd} VND`;
+          feeTransport.innerText = `${data.fee} VND`;
+          checkoutTotalSumPrice.innerText = `${total} VND`;
           itemProductCart.parentNode.removeChild(itemProductCart);
           noProduct.style.display = 'flex';
         } else {
           const total = parseFloat(data.priceProd) + parseFloat(data.fee);
-          console.log('total', total);
           quantity.innerText = data.quantity;
           textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
           provisional.innerText = `Tạm tính(${data.countProd} sản phẩm)`;
-          sumPrice.innerText = `${data.priceProd} đ`;
-          feeTransport.innerText = `${data.fee} đ`;
-          checkoutTotalSumPrice.innerText = `${total} đ`;
+          sumPrice.innerText = `${data.priceProd} VND`;
+          feeTransport.innerText = `${data.fee} VND`;
+          checkoutTotalSumPrice.innerText = `${total} VND`;
           itemProductCart.parentNode.removeChild(itemProductCart);
         }
       }
@@ -215,11 +203,8 @@ const hideSuccess = function () {
 };
 
 const addCartProduct = async function (btn) {
-  console.log('addCartProduct', btn);
   const productId = btn.parentNode.querySelector('[name="productId"]').value;
-  // const csrf = btn.parentNode.querySelector('[name="_csrf"]').value;
   const textCart = document.getElementById('quantity-price');
-  console.log(document.getElementById('quantity-price'));
   try {
     const response = await fetch('/cart', {
       method: 'POST',
@@ -227,18 +212,15 @@ const addCartProduct = async function (btn) {
         id: productId,
       }),
       headers: {
-        // 'csrf-token': csrf,
         'Content-Type': 'application/json',
       },
     });
-    console.log('respon', response);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
 
     const data = await response.json();
-    console.log('data', data);
-    textCart.innerText = `${data.countProd} items - ${data.priceProd}đ`;
+    textCart.innerText = `${data.countProd} items - ${data.priceProd} VND`;
     showSuccess();
     document.addEventListener('click', hideSuccess, { once: true });
   } catch (err) {
