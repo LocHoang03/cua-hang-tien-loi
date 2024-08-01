@@ -197,6 +197,7 @@
 .checkout__confirm button:hover {
   background-color: rgba(255, 169, 8, 0.5);
 }
+<<<<<<< HEAD
 
 .custom-stripe-button {
   width: 400px !important;
@@ -215,3 +216,5 @@
   font-size: 18px;
   padding: 10px 20px;
 }
+=======
+>>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197

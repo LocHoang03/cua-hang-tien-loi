@@ -14,6 +14,7 @@ router.get('/detail-product/:productId', shopController.getDetailProduct);
 router.get('/products/:typeProduct', shopController.getTypeProductsShop);
 router.get('/cart', auth.isAuth, shopController.getCart);
 router.get('/order', auth.isAuth, shopController.getOrder);
+// router.get('/order', auth.isAuth, shopController.getOrder);
 // router.get('/invoice/:orderId', shopController.getInvoice);
 router.post('/cart', auth.isAuth, shopController.postCart);
 // router.post(
@@ -50,4 +51,5 @@ router.get('/get-checkout', shopController.getCheckOut);
 router.post('/create-checkout-session', shopController.createCheckout);
 
 router.get('/session-status', shopController.sessionStatus);
+// router.post('/create-checkout-session', shopController.createCheckout);
 module.exports = router;

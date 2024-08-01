@@ -1,0 +1,12 @@
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DAL.dll
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DAL.pdb
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DTO.dll
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DTO.pdb
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\obj\Debug\DAL.dll
+C:\Users\minhn\Desktop\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\obj\Debug\DAL.pdb
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DAL.dll
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DAL.pdb
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DTO.dll
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\bin\Debug\DTO.pdb
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\obj\Debug\DAL.dll
+D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\QL_CUAHANGTIENLOI\DAL\obj\Debug\DAL.pdb
