@@ -19,8 +19,13 @@
                         <% orders.map((order) => { %>
                             <li class="order__item-list-order">
                                 <div class="order__info-order">
+<<<<<<< HEAD
+                                    <h3>Đơn hàng : <%= order.orderId %></h3>
+                                    <a href="/invoice/<%= order.orderId %>">In Hóa Đơn</a>
+=======
                                     <h3>Đơn hàng : <%= order._id %></h3>
                                     <a href="/invoice/<%= order._id %>">In Hóa Đơn</a>
+>>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
                                 </div>
                                 <div class="order__info-product">
                                     <ul class="order__list-item-info-product">
@@ -29,6 +34,17 @@
                                             <li class="order__item-product">
                                                 <div class="order__item-product-top">
                                                     <div class="order__contentImage">
+<<<<<<< HEAD
+                                                        <img src="<%= product.imageUrl %>" class="order__img" />
+                                                    </div>
+                                                    <div class="order__title-quantity">
+                                                        <h3>Sản phẩm: <%= product.title %></h3>
+                                                        <h5>Số lượng: x<%= product.quantity %></h5>
+                                                    </div>
+                                                    <div class="order__price">Giá: <span><%= product.price %>đ</span></div>
+                                                </div>
+                                                <% let productTotal = product.price * product.quantity; %>
+=======
                                                         <img src="/<%= product.product.imageURL %>" class="order__img" />
                                                     </div>
                                                     <div class="order__title-quantity">
@@ -38,6 +54,7 @@
                                                     <div class="order__price">Giá: <span><%= product.product.price %>đ</span></div>
                                                 </div>
                                                 <% let productTotal = product.product.price * product.quantity; %>
+>>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
                                                 <% orderTotal += productTotal; %>
                                             </li>
                                         <% }) %>
@@ -48,11 +65,19 @@
                                         <a href="">Đánh giá Shop</a>
                                     </div>
                                     <div class="order__container-total-fee">
+<<<<<<< HEAD
+                                        <h4 class="order__fee-transport">Phí vận chuyển: <span><%= order.fee - orderTotal  %>đ</span></h4>
+                                        <h4 class="order__total">Thành Tiền: <span><%=  order.fee %>đ</span></h4>
+                                        <form action="/repurchase-product" class="order__form-repurchase" method="post">
+                                            <button>Mua lại</button>
+                                            <input type="text" hidden name="orderId" value="<%= order.orderId %>">
+=======
                                         <h4 class="order__fee-transport">Phí vận chuyển: <span><%= order.fee %>đ</span></h4>
                                         <h4 class="order__total">Thành Tiền: <span><%= orderTotal + order.fee %>đ</span></h4>
                                         <form action="/repurchase-product" class="order__form-repurchase" method="post">
                                             <button>Mua lại</button>
                                             <input type="text" hidden name="orderId" value="<%= order._id %>">
+>>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
                                         </form>
                                     </div>
                                 </div>

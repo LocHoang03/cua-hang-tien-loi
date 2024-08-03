@@ -1,4 +1,4 @@
-const Checkout = function (btn) {
+const Checkout = async function (btn) {
   const lengthProductCart = document
     .querySelector('.cart__list-products')
     .getElementsByTagName('li').length;
@@ -6,6 +6,9 @@ const Checkout = function (btn) {
     btn.disabled = true;
   } else {
     btn.disabled = false;
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    window.location.href = `${protocol}//${host}/get-checkout`;
   }
 };
 

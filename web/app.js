@@ -101,9 +101,15 @@ app.use(async (req, res, next) => {
     if (count > 0) {
       fee = 15000 + 5000 * Math.floor((count - 1) / 3);
     }
+<<<<<<< HEAD
+    res.locals.count = count;
+    req.fee = fee;
+    req.total = fee + price;
+=======
     res.locals.count = fee;
     req.fee = fee;
 
+>>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
     next();
   } catch (err) {
     next(new Error(err));
