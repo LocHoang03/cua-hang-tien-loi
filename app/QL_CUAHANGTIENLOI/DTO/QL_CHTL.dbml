@@ -24,19 +24,8 @@
       <Column Name="ORDER_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PRODUCT_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="QUANTITY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="ORDER_ORDER_PRODUCT" Member="ORDER" ThisKey="ORDER_ID" OtherKey="ORDER_ID" Type="ORDER" IsForeignKey="true" />
       <Association Name="PRODUCT_ORDER_PRODUCT" Member="PRODUCT" ThisKey="PRODUCT_ID" OtherKey="PRODUCT_ID" Type="PRODUCT" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ORDERS" Member="ORDERs">
-    <Type Name="ORDER">
-      <Column Name="ORDER_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FEE" Type="System.Decimal" DbType="Decimal(10,3) NOT NULL" CanBeNull="false" />
-      <Column Name="USER_EMAIL" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="USER_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CREATED_AT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="ORDER_ORDER_PRODUCT" Member="ORDER_PRODUCTs" ThisKey="ORDER_ID" OtherKey="ORDER_ID" Type="ORDER_PRODUCT" />
-      <Association Name="USER_ORDER" Member="USER" ThisKey="USER_ID" OtherKey="USER_ID" Type="USER" IsForeignKey="true" />
+      <Association Name="ORDER_ORDER_PRODUCT" Member="ORDER" ThisKey="ORDER_ID" OtherKey="ORDER_ID" Type="ORDER" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PRODUCTS" Member="PRODUCTs">
@@ -89,6 +78,18 @@
       <Column Name="TOKEN_EXPIRATION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="USER_CART" Member="CARTs" ThisKey="USER_ID" OtherKey="USER_ID" Type="CART" />
       <Association Name="USER_ORDER" Member="ORDERs" ThisKey="USER_ID" OtherKey="USER_ID" Type="ORDER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ORDERS" Member="ORDERs">
+    <Type Name="ORDER">
+      <Column Name="ORDER_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FEE" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TRANSPORT_FEE" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="USER_EMAIL" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="USER_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CREATED_AT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="ORDER_ORDER_PRODUCT" Member="ORDER_PRODUCTs" ThisKey="ORDER_ID" OtherKey="ORDER_ID" Type="ORDER_PRODUCT" />
+      <Association Name="USER_ORDER" Member="USER" ThisKey="USER_ID" OtherKey="USER_ID" Type="USER" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

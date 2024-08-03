@@ -10,7 +10,7 @@ const { formatCurrency } = require('./util/formatPrice');
 const config = {
   user: process.env.user || 'sa',
   password: process.env.password || '123',
-  server: process.env.server || 'LAPTOP-FI6VC23H\\SQLEXPRESS',
+  server: process.env.server || 'MSI\\SQLEXPRESS',
   database: process.env.name_BD || 'DB_QLCHTL',
   options: {
     encrypt: false,

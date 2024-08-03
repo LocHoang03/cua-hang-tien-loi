@@ -34,7 +34,7 @@ namespace DAL
             }
         }
 
-        public void UpdateStaff(int staffID, string name, string email, string phone, string password, bool isAdmin)
+        public void UpdateStaff(int staffID, string name, string email, string phone, string password)
         {
             var existingStaff = qlchtl.STAFFs.SingleOrDefault(stf => stf.STAFF_ID == staffID);
             if (existingStaff != null)
@@ -43,13 +43,23 @@ namespace DAL
                 existingStaff.EMAIL = email;
                 existingStaff.PHONE = phone;
                 existingStaff.PASSWORD = password;
-                existingStaff.ISADMIN = isAdmin;
+                existingStaff.ISADMIN = false;
             }
         }
 
         public void SaveChanges()
         {
             qlchtl.SubmitChanges();
+        }
+
+        public List<STAFF> SearchStaffs(string searchText)
+        {
+            return qlchtl.STAFFs
+                          .Where(s => (s.NAME.Contains(searchText) ||
+                                   s.EMAIL.Contains(searchText) ||
+                                   s.PHONE.Contains(searchText)) &&
+                                   s.ISADMIN == false) 
+                      .ToList();
         }
     }
 }

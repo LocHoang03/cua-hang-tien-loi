@@ -20,5 +20,14 @@ namespace BLL
         {
             return pdal.LoadProduct();
         }
+
+        public List<PRODUCT> SearchProductsByTitle(string title)
+        {
+            return pdal.SearchProductsByTitle(title);
+        }
+        public List<PRODUCT> GetProductsByPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            return pdal.GetProductsByPriceRange(minPrice, maxPrice);
+        }
     }
 }

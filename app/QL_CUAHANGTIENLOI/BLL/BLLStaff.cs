@@ -21,7 +21,7 @@ namespace BLL
             return stdal.LoadStaff();
         }
 
-        public void AddStaff(string name, string email, string phone, string password, bool isAdmin)
+        public void AddStaff(string name, string email, string phone, string password)
         {
             STAFF newStaff = new STAFF();
 
@@ -29,7 +29,7 @@ namespace BLL
             newStaff.EMAIL = email;
             newStaff.PHONE = phone;
             newStaff.PASSWORD = password;
-            newStaff.ISADMIN = isAdmin;
+            newStaff.ISADMIN = false;
             stdal.AddStaff(newStaff);
         }
 
@@ -38,14 +38,19 @@ namespace BLL
             stdal.DeleteStaff(staffID);
         }
 
-        public void UpdateStaff(int staffID, string name, string email, string phone, string password, bool isAdmin)
+        public void UpdateStaff(int staffID, string name, string email, string phone, string password)
         {
-            stdal.UpdateStaff(staffID, name, email, phone, password, isAdmin);
+            stdal.UpdateStaff(staffID, name, email, phone, password);
         }
 
         public void SaveChanges()
         {
             stdal.SaveChanges();
+        }
+
+        public List<STAFF> SearchStaffs(string searchText)
+        {
+            return stdal.SearchStaffs(searchText);
         }
     }
 }

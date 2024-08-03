@@ -32,34 +32,62 @@ namespace QL_CUAHANGTIENLOI
         }
         private void quảnLýLoạiSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseAllMdiChildren();
-            frm_QLLoaiSP frm = new frm_QLLoaiSP();
-            frm.MdiParent = this;
-            frm.Show();
+            panelMain.Controls.Clear();
+            UserControlLoaiSanPham tk = new UserControlLoaiSanPham();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
         }
 
         private void quảnLýSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseAllMdiChildren();
-            frm_QLSP frm = new frm_QLSP();
-            frm.MdiParent = this;
-            frm.Show();
+            panelMain.Controls.Clear();
+            UserControlSanPham tk = new UserControlSanPham();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
         }
 
         private void quảnLýNhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseAllMdiChildren();
-            frm_QLNV frm = new frm_QLNV();
-            frm.MdiParent = this;
-            frm.Show();
+            panelMain.Controls.Clear();
+            UserControlNhanVien tk = new UserControlNhanVien();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
         }
 
         private void quảnLýKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseAllMdiChildren();
-            frm_QLKH frm = new frm_QLKH();
-            frm.MdiParent = this;
-            frm.Show();
+            panelMain.Controls.Clear();
+            UserControlKhachHang tk = new UserControlKhachHang();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
         }
+
+        private void doanhThuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            panelMain.Controls.Clear();
+            DoanhThuLoiNhuan tk = new DoanhThuLoiNhuan();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
+        }
+
+        private void nhómKháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            panelMain.Controls.Clear();
+            ThongKeUserControl tk = new ThongKeUserControl();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
+        }
+
+        private void quảnLýHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelMain.Controls.Clear();
+            UserControlHoaDon tk = new UserControlHoaDon();
+            panelMain.Controls.Add(tk);
+            panelMain.Visible = true;
+        }
+
+        
     }
 }

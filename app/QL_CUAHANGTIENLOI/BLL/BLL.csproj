@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLCustomerOrder.cs" />
+    <Compile Include="BLLListOrder.cs" />
     <Compile Include="BLLProduct.cs" />
     <Compile Include="BLLStaff.cs" />
     <Compile Include="BLLTypeProduct.cs" />

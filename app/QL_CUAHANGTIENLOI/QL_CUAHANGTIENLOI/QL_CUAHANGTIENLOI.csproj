@@ -33,6 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accord">
+      <HintPath>..\packages\Accord.3.8.0\lib\net45\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning">
+      <HintPath>..\packages\Accord.MachineLearning.3.8.0\lib\net45\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net45\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net45\Accord.Statistics.dll</HintPath>
+    </Reference>
     <Reference Include="BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\BLL\bin\Debug\BLL.dll</HintPath>
@@ -40,6 +52,10 @@
     <Reference Include="CloudinaryDotNet, Version=1.26.2.0, Culture=neutral, PublicKeyToken=c8234dc617ae7841, processorArchitecture=MSIL">
       <HintPath>..\packages\CloudinaryDotNet.1.26.2\lib\net452\CloudinaryDotNet.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DAL\bin\Debug\DAL.dll</HintPath>
     </Reference>
     <Reference Include="DTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -56,6 +72,7 @@
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,35 +84,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConnection.cs" />
+    <Compile Include="DoanhThuLoiNhuan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DoanhThuLoiNhuan.Designer.cs">
+      <DependentUpon>DoanhThuLoiNhuan.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frm_DangNhap.Designer.cs">
       <DependentUpon>frm_DangNhap.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frm_QLKH.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_QLKH.Designer.cs">
-      <DependentUpon>frm_QLKH.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frm_QLLoaiSP.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_QLLoaiSP.Designer.cs">
-      <DependentUpon>frm_QLLoaiSP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frm_QLNV.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_QLNV.Designer.cs">
-      <DependentUpon>frm_QLNV.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frm_QLSP.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_QLSP.Designer.cs">
-      <DependentUpon>frm_QLSP.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_TrangChu.cs">
       <SubType>Form</SubType>
@@ -110,20 +109,47 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_CHTL.xsd</DependentUpon>
     </Compile>
+    <Compile Include="UserControlHoaDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlHoaDon.Designer.cs">
+      <DependentUpon>UserControlHoaDon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKeUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKeUserControl.Designer.cs">
+      <DependentUpon>ThongKeUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlKhachHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlKhachHang.Designer.cs">
+      <DependentUpon>UserControlKhachHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlLoaiSanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlLoaiSanPham.Designer.cs">
+      <DependentUpon>UserControlLoaiSanPham.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlNhanVien.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlNhanVien.Designer.cs">
+      <DependentUpon>UserControlNhanVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlSanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlSanPham.Designer.cs">
+      <DependentUpon>UserControlSanPham.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DoanhThuLoiNhuan.resx">
+      <DependentUpon>DoanhThuLoiNhuan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_DangNhap.resx">
       <DependentUpon>frm_DangNhap.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frm_QLKH.resx">
-      <DependentUpon>frm_QLKH.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frm_QLLoaiSP.resx">
-      <DependentUpon>frm_QLLoaiSP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frm_QLNV.resx">
-      <DependentUpon>frm_QLNV.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frm_QLSP.resx">
-      <DependentUpon>frm_QLSP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_TrangChu.resx">
       <DependentUpon>frm_TrangChu.cs</DependentUpon>
@@ -138,7 +164,27 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
+    <EmbeddedResource Include="UserControlHoaDon.resx">
+      <DependentUpon>UserControlHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKeUserControl.resx">
+      <DependentUpon>ThongKeUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlKhachHang.resx">
+      <DependentUpon>UserControlKhachHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlLoaiSanPham.resx">
+      <DependentUpon>UserControlLoaiSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlNhanVien.resx">
+      <DependentUpon>UserControlNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlSanPham.resx">
+      <DependentUpon>UserControlSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -168,6 +214,10 @@
       <Project>{2B66AABF-12D5-44F3-863A-58AC16741F22}</Project>
       <Name>emailTextBox</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhoneTextBox\PhoneTextBox.csproj">
+      <Project>{CC155F1A-B357-48CE-B31F-95F0696F7F07}</Project>
+      <Name>PhoneTextBox</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btn_insert.jpg" />
@@ -183,6 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btn_update.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_filter.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

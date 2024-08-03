@@ -49,5 +49,12 @@ namespace DAL
         {
             qlchtl.SubmitChanges();
         }
+
+        public List<TYPE_PRODUCT> SearchTypeProductsByName(string name)
+        {
+            return qlchtl.TYPE_PRODUCTs
+                          .Where(tp => tp.NAMETYPE.Contains(name))
+                          .ToList();
+        }
     }
 }

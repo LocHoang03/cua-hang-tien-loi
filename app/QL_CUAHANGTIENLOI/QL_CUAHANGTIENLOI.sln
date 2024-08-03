@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{6937AA94-8826-4057-B631-0BB6ABAA6905}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneTextBox", "PhoneTextBox\PhoneTextBox.csproj", "{CC155F1A-B357-48CE-B31F-95F0696F7F07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D7D2F319-6D10-4808-A552-BC2AD88A3744}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +46,10 @@ Global
 		{6937AA94-8826-4057-B631-0BB6ABAA6905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6937AA94-8826-4057-B631-0BB6ABAA6905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6937AA94-8826-4057-B631-0BB6ABAA6905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC155F1A-B357-48CE-B31F-95F0696F7F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC155F1A-B357-48CE-B31F-95F0696F7F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC155F1A-B357-48CE-B31F-95F0696F7F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC155F1A-B357-48CE-B31F-95F0696F7F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

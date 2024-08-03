@@ -43,5 +43,10 @@ namespace BLL
         {
             tpdal.SaveChanges();
         }
+
+        public List<TYPE_PRODUCT> SearchTypeProductsByName(string name)
+        {
+            return tpdal.SearchTypeProductsByName(name);
+        }
     }
 }
