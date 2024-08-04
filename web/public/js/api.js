@@ -12,6 +12,17 @@ const Checkout = async function (btn) {
   }
 };
 
+const CheckoutMoMo = async function () {
+  const response = await fetch('/get-checkout-momo', {
+    method: 'POST',
+  });
+  const responseJson = await response.json();
+  console.log(responseJson);
+  if (responseJson.result.resultCode === 0) {
+    window.location.href = responseJson.result.payUrl;
+  }
+};
+
 const postDeleteAllCart = function (btn) {
   const noProduct = document.querySelector('.no-product1');
   const textCart = document.getElementById('quantity-price');
@@ -223,6 +234,52 @@ const addCartProduct = async function (btn) {
     textCart.innerText = `${data.countProd} items - ${data.priceProd} VND`;
     showSuccess();
     document.addEventListener('click', hideSuccess, { once: true });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const changeInfo = async function (btn) {
+  const userId =
+    btn.parentNode.parentNode.querySelector('[name="userId"]').value;
+  const name = btn.parentNode.parentNode.querySelector('[name="name"]').value;
+  const phone = btn.parentNode.parentNode.querySelector('[name="phone"]').value;
+  const address =
+    btn.parentNode.parentNode.querySelector('[name="address"]').value;
+  console.log(userId);
+  try {
+    const response = await fetch('/auth/change-information', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: userId,
+        name: name,
+        phone: phone,
+        address: address,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    if (!data.success) {
+      const error = document.getElementById('error-auth-h5');
+      error.innerText = data.msg;
+      const success = document.getElementById('error-auth-info-div');
+      success.style.display = 'block';
+      setTimeout(() => {
+        success.style.display = 'none';
+      }, 3000);
+      setTimeout(() => {
+        success.style.display = 'none';
+      }, 3000);
+    } else {
+      const nameUser = document.querySelector('.nameUser');
+      const phoneUser = document.querySelector('.phoneUser');
+      nameUser.innerText = 'Họ và tên: ' + name;
+      phoneUser.innerText = 'Số điện thoại: ' + phone;
+      $('#exampleModal').modal('hide');
+    }
   } catch (err) {
     console.error(err);
   }

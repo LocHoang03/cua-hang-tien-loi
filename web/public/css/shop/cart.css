@@ -135,13 +135,18 @@
 
 /* checkout */
 
+.div-right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
 .cart__container-checkout {
   background: white;
-  margin-left: 1rem;
-  width: 30%;
   padding: 1.4rem 1rem;
   color: #575757;
-  max-height: 330px;
+  margin-left: 1rem;
+  max-height: 240px;
 }
 
 .checkout__title {
@@ -197,7 +202,6 @@
 .checkout__confirm button:hover {
   background-color: rgba(255, 169, 8, 0.5);
 }
-<<<<<<< HEAD
 
 .custom-stripe-button {
   width: 400px !important;
@@ -216,5 +220,22 @@
   font-size: 18px;
   padding: 10px 20px;
 }
-=======
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
+
+.payment-method {
+  background: white;
+  padding: 1.4rem 1rem;
+  color: #575757;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  max-height: 240px;
+}
+.payment-method button {
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: 0.6rem 0;
+  font-size: 1.2rem;
+  border: none;
+  background: rgb(255, 169, 8);
+  color: white;
+  cursor: pointer;
+}

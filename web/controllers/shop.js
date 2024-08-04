@@ -9,21 +9,17 @@ const { connect, sql } = require('../models/connect');
 const { validationResult } = require('express-validator');
 const { request } = require('http');
 const { response } = require('express');
-<<<<<<< HEAD
 require('dotenv').config();
-=======
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
 const {
   addToCart,
   increaseQuantity,
   decreaseQuantity,
   deleteCartItem,
   clearCart,
+  updateUserCart,
 } = require('../util/cart');
-<<<<<<< HEAD
 const { initialize } = require('../util/return');
-=======
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
+const createOrderPdf = require('../util/orderPdf');
 
 exports.getHomeShop = async (req, res, next) => {
   try {
@@ -211,7 +207,6 @@ exports.getTypeProductsShop = async (req, res, next) => {
         FETCH NEXT ${PER_ITEM_PAGE} ROWS ONLY
       `);
     products = productsResult.recordset;
-<<<<<<< HEAD
 
     res.render('shop/products/products', {
       pageTitle: `${req.params.typeProduct} Product`,
@@ -315,7 +310,7 @@ exports.getOrder = async (req, res, next) => {
         .request()
         .input('userId', sql.Int, req.user.USER_ID)
         .query(
-          `SELECT a.* FROM CART_PRODUCTS a, CARTS b WHERE a.CART_ID = b.CART_ID AND b.USER_ID = @userId`,
+          `SELECT a.* FROM CART_PRODUCTS a, CARTS b WHERE a.CART_ID = b.CART_ID AND b.USER_ID = @userId `,
         );
       const listProducts = userCartResult.recordset;
       if (listProducts.length > 0) {
@@ -333,15 +328,16 @@ exports.getOrder = async (req, res, next) => {
           }),
         );
         const orderQuery = `
-            INSERT INTO ORDERS (USER_ID, USER_EMAIL, FEE)
+            INSERT INTO ORDERS (USER_ID, USER_EMAIL, FEE,TRANSPORT_FEE)
             OUTPUT Inserted.ORDER_ID
-            VALUES (@userId, @userEmail, @fee)
+            VALUES (@userId, @userEmail, @fee,@transport)
           `;
         const orderResult = await pool
           .request()
           .input('userId', sql.Int, req.user.USER_ID)
           .input('userEmail', sql.NVarChar, req.user.EMAIL)
           .input('fee', sql.Float, req.total)
+          .input('transport', sql.Float, req.fee)
           .query(orderQuery);
         const orderId = orderResult.recordset[0].ORDER_ID;
         for (const item of products) {
@@ -393,11 +389,10 @@ exports.getOrder = async (req, res, next) => {
     });
 
     const resultArray = Object.values(orderMap);
-
     res.render('shop/products/order', {
       pageTitle: 'My Order',
       path: '/order',
-      orders: resultArray,
+      orders: resultArray.reverse(),
     });
   } catch (err) {
     next(new Error(err));
@@ -639,32 +634,7 @@ exports.postIncreaseCartItem = async (req, res, next) => {
     next(new Error(err));
   }
 };
-=======
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
 
-    res.render('shop/products/products', {
-      pageTitle: `${req.params.typeProduct} Product`,
-      path: '/products',
-      path1: `/products/${req.params.typeProduct}`,
-      types: types,
-      type: req.params.typeProduct,
-      products: products,
-      adminEdit: false,
-      detail: undefined,
-      searchProduct: undefined,
-      currentPage: page,
-      hasNextPage: PER_ITEM_PAGE * page < totalItem,
-      hasPreviousPage: page > 1,
-      nextPage: page + 1,
-      previousPage: page - 1,
-      lastPage: Math.ceil(totalItem / PER_ITEM_PAGE),
-    });
-  } catch (error) {
-    next(new Error(error));
-  }
-};
-
-<<<<<<< HEAD
 exports.getCheckOut = async (req, res, next) => {
   try {
     req.session.order = true;
@@ -692,7 +662,7 @@ exports.createCheckout = async (req, res) => {
       `);
 
   const listProducts = cartProductResult.recordset;
-
+  console.log(listProducts);
   const session = await stripe.checkout.sessions.create({
     ui_mode: 'embedded',
     line_items: [
@@ -726,326 +696,251 @@ exports.createCheckout = async (req, res) => {
   res.send({ clientSecret: session.client_secret });
 };
 
-exports.sessionStatus = async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    ui_mode: 'embedded',
-    line_items: [
-      {
-        price: '{{PRICE_ID}}',
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    return_url: `${YOUR_DOMAIN}/return.html?session_id={CHECKOUT_SESSION_ID}`,
-  });
-
-  res.send({ clientSecret: session.client_secret });
-};
-=======
-exports.getDetailProduct = async (req, res, next) => {
+exports.getInvoice = async (req, res, next) => {
   try {
-    const productId = req.params.productId;
-    const typeProduct = req.params.typeProduct;
-    let types, idType, product;
-    const pool = await connect;
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
-
-    const typesResult = await pool
+    let pool = await connect;
+    const orderIdResult = await pool
       .request()
-      .query(`SELECT * FROM TYPE_PRODUCTS`);
-    types = typesResult.recordset;
-
-    for (let i = 0; i < types.length; i++) {
-      if (types[i].FLAG === typeProduct) {
-        idType = types[i].TYPE_ID;
-        break;
-      }
-    }
-
-    const productResult = await pool
+      .input('userId', sql.Int, req.user.USER_ID)
+      .input('orderId', sql.Int, req.params.orderId)
+      .query(
+        `SELECT * FROM ORDERS WHERE USER_ID = @userId AND ORDER_ID = @orderId`,
+      );
+    const order = orderIdResult.recordset[0];
+    const productOrder = await pool
       .request()
-      .input('PRODUCT_ID', sql.Int, productId)
-      .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @PRODUCT_ID`);
-    product = productResult.recordset[0];
-
-    res.render('shop/products/detail-product', {
-      pageTitle: 'Chi tiết sản phẩm',
-      path: '/detail-product',
-      path1: '/detail-product',
-      detail: true,
-      product: product,
-      types: types,
-      adminEdit: false,
-    });
-  } catch (error) {
-    next(new Error(error));
-  }
-};
-
-exports.getCart = async (req, res, next) => {
-  try {
-    const userId = req.user.USER_ID;
-    let products = [];
-
-    const pool = await connect;
-
-    const cartResult = await pool
-      .request()
-      .input('userId', sql.Int, userId)
-      .query(`SELECT CART_ID FROM CARTS WHERE USER_ID = @userId`);
-    const cartId = cartResult.recordset[0].CART_ID;
-
-    const productsResult = await pool.request().input('cartId', sql.Int, cartId)
-      .query(`
-        SELECT p.* ,cp.QUANTITY
-        FROM CART_PRODUCTS cp
-        JOIN PRODUCTS p ON cp.PRODUCT_ID = p.PRODUCT_ID
-        WHERE cp.CART_ID = @cartId
-      `);
-    products = productsResult.recordset;
-
-    res.render('shop/products/cart', {
-      pageTitle: 'My Cart',
-      path: '/cart',
-      products: products,
-    });
-  } catch (error) {
-    next(new Error(error));
-  }
-};
-
-exports.postCart = async (req, res, next) => {
-  let countProd = 0;
-  let priceProd = 0;
-
-  try {
-    const productId = req.body.id;
-    const pool = await connect;
-
-    const productResult = await pool
-      .request()
-      .input('productId', sql.Int, productId)
-      .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @productId`);
-
-    const product = productResult.recordset[0];
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found.' });
-    }
-
-    await addToCart(req.user, product);
-
-    const cartResult = await pool
-      .request()
-      .input('userId', sql.Int, req.user.USER_ID).query(`
-        SELECT cp.QUANTITY, p.PRICE
-        FROM CART_PRODUCTS cp
-        JOIN PRODUCTS p ON cp.PRODUCT_ID = p.PRODUCT_ID
-        WHERE cp.CART_ID = (SELECT CART_ID FROM CARTS WHERE USER_ID = @userId)
-      `);
-
-    const cartItems = cartResult.recordset;
-    cartItems.forEach((item) => {
-      countProd += item.QUANTITY;
-      priceProd += item.QUANTITY * item.PRICE;
-    });
-
-    res.status(200).json({
-      message: 'Success!',
-      countProd: countProd,
-      priceProd: priceProd,
-    });
+      .input('orderId', sql.Int, order.ORDER_ID)
+      .query(
+        `SELECT * FROM ORDER_PRODUCTS a, PRODUCTS b WHERE ORDER_ID = @orderId AND a.PRODUCT_ID = b.PRODUCT_ID`,
+      );
+    await createOrderPdf(order, req.user, productOrder.recordset, res);
   } catch (err) {
-    res.status(500).json({ message: 'Adding product to cart failed.' });
-  }
-};
-
-exports.postDeleteAllCartItem = async (req, res, next) => {
-  let countProd = 0,
-    priceProd = 0,
-    count = 0,
-    fee = 0;
-
-  try {
-    await clearCart(req.user);
-
-    res.status(200).json({
-      message: 'Success!',
-      countProd: countProd,
-      priceProd: priceProd,
-      count: count,
-      fee: fee,
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'Clearing cart failed.' });
-    console.log(err);
-  }
-};
-
-exports.postDeleteCartItem = async (req, res, next) => {
-  let countProd = 0,
-    priceProd = 0,
-    count = 0,
-    fee = 0;
-
-  try {
-    const pool = await connect;
-
-    const productResult = await pool
-      .request()
-      .input('productId', sql.Int, req.params.productId)
-      .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @productId`);
-
-    const product = productResult.recordset[0];
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found.' });
-    }
-
-    await deleteCartItem(req.user, product);
-
-    const cartResult = await pool
-      .request()
-      .input('userId', sql.Int, req.user.id).query(`
-        SELECT cp.*, p.PRICE FROM CART_PRODUCTS cp
-        JOIN PRODUCTS p ON cp.PRODUCT_ID = p.PRODUCT_ID
-        WHERE cp.CART_ID = (SELECT CART_ID FROM CARTS WHERE USER_ID = @userId)
-      `);
-
-    const cartItems = cartResult.recordset;
-
-    cartItems.forEach((item) => {
-      count += 1;
-      countProd += item.QUANTITY;
-      priceProd += item.QUANTITY * item.PRICE;
-    });
-
-    if (count > 0) {
-      fee = 15000 + 5000 * Math.floor((count - 1) / 3);
-    }
-
-    res.status(200).json({
-      message: 'Success!',
-      countProd: countProd,
-      priceProd: priceProd,
-      fee: fee,
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'Deleting product failed.' });
-    // next(new Error(err));
-  }
-};
-
-exports.postDecreaseCartItem = async (req, res, next) => {
-  let productId,
-    countProd = 0,
-    priceProd = 0,
-    quantity = 0,
-    count = 0,
-    fee = 0;
-
-  try {
-    const pool = await connect;
-
-    const productResult = await pool
-      .request()
-      .input('productId', sql.Int, req.params.productId)
-      .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @productId`);
-
-    const product = productResult.recordset[0];
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found.' });
-    }
-
-    productId = product.PRODUCT_ID;
-    await decreaseQuantity(req.user, product);
-
-    const cartResult = await pool
-      .request()
-      .input('userId', sql.Int, req.user.USER_ID).query(`
-        SELECT cp.*, p.PRICE FROM CART_PRODUCTS cp
-        JOIN PRODUCTS p ON cp.PRODUCT_ID = p.PRODUCT_ID
-        WHERE cp.CART_ID = (SELECT CART_ID FROM CARTS WHERE USER_ID = @userId)
-      `);
-
-    const cartItems = cartResult.recordset;
-
-    cartItems.forEach((item) => {
-      count += 1;
-      countProd += item.QUANTITY;
-      priceProd += item.QUANTITY * item.PRICE;
-      if (productId === item.PRODUCT_ID) {
-        quantity = item.QUANTITY;
-      }
-    });
-
-    if (count > 0) {
-      fee = 15000 + 5000 * Math.floor((count - 1) / 3);
-    }
-
-    res.status(200).json({
-      message: 'Success!',
-      countProd: countProd,
-      priceProd: priceProd,
-      quantity: quantity,
-      fee: fee,
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'failed.' });
-    console.log(err);
-  }
-};
-
-exports.postIncreaseCartItem = async (req, res, next) => {
-  let productId,
-    countProd = 0,
-    priceProd = 0,
-    quantity = 0,
-    count = 0;
-
-  try {
-    const pool = await connect;
-
-    const productResult = await pool
-      .request()
-      .input('productId', sql.Int, req.params.productId)
-      .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @productId`);
-
-    const product = productResult.recordset[0];
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found.' });
-    }
-
-    productId = product.PRODUCT_ID;
-    await increaseQuantity(req.user, product);
-
-    const cartResult = await pool
-      .request()
-      .input('userId', sql.Int, req.user.USER_ID).query(`
-        SELECT cp.*, p.PRICE FROM CART_PRODUCTS cp
-        JOIN PRODUCTS p ON cp.PRODUCT_ID = p.PRODUCT_ID
-        WHERE cp.CART_ID = (SELECT CART_ID FROM CARTS WHERE USER_ID = @userId)
-      `);
-
-    const cartItems = cartResult.recordset;
-    cartItems.forEach((item) => {
-      count += 1;
-      countProd += item.QUANTITY;
-      priceProd += item.QUANTITY * item.PRICE;
-      if (productId === item.PRODUCT_ID) {
-        quantity = item.QUANTITY;
-      }
-    });
-    const fee = 15000 + 5000 * Math.floor((count - 1) / 3);
-
-    res.status(200).json({
-      message: 'Success!',
-      countProd: countProd,
-      priceProd: priceProd,
-      quantity: quantity,
-      fee: fee,
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'failed.' });
     console.log(err);
     next(new Error(err));
   }
+};
+
+exports.postRepurchaseProduct = async (req, res, next) => {
+  try {
+    let pool = await connect;
+    const orderIdResult = await pool
+      .request()
+      .input('userId', sql.Int, req.user.USER_ID)
+      .input('orderId', sql.Int, req.body.orderId)
+      .query(
+        `SELECT * FROM ORDERS WHERE USER_ID = @userId AND ORDER_ID = @orderId`,
+      );
+    const orderId = orderIdResult.recordset[0].ORDER_ID;
+
+    const quantityProductOrder = await pool
+      .request()
+      .input('orderId', sql.Int, orderId)
+      .query(`SELECT * FROM ORDER_PRODUCTS WHERE  ORDER_ID = @orderId`);
+    await clearCart(req.user);
+    await updateUserCart(req.user.USER_ID, quantityProductOrder.recordset);
+    res.redirect('/cart');
+  } catch (err) {
+    next(new Error(err));
+  }
+};
+
+let querySearchProducts;
+
+async function querySearchProduct(res, page, string, next) {
+  try {
+    let pool = await connect;
+
+    let searchString = `%${string}%`;
+
+    let totalItemResult = await pool
+      .request()
+      .input('searchString', sql.NVarChar, searchString)
+      .query(
+        'SELECT COUNT(*) AS count FROM PRODUCTS WHERE TITLE LIKE @searchString',
+      );
+    let totalItem = totalItemResult.recordset[0].count;
+
+    let productsResult = await pool
+      .request()
+      .input('searchString', sql.NVarChar, searchString)
+      .input('offset', sql.Int, (page - 1) * PER_ITEM_PAGE)
+      .input('limit', sql.Int, PER_ITEM_PAGE)
+      .query(
+        'SELECT * FROM PRODUCTS WHERE TITLE LIKE @searchString ORDER BY TITLE OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY',
+      );
+    let products = productsResult.recordset;
+
+    let typesResult = await pool.request().query('SELECT * FROM TYPE_PRODUCTS');
+    let types = typesResult.recordset;
+
+    res.render('shop/products/products', {
+      pageTitle: 'Sản Phẩm',
+      path: '/search-products',
+      path1: '/search-products',
+      adminEdit: false,
+      searchProduct: true,
+      types: types,
+      products: products,
+      type: undefined,
+      currentPage: page,
+      hasNextPage: PER_ITEM_PAGE * page < totalItem,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItem / PER_ITEM_PAGE),
+    });
+  } catch (error) {
+    next(new Error(error));
+  }
+}
+
+exports.SearchProducts = async (req, res, next) => {
+  if (req.method === 'GET') {
+    const page = parseInt(req.query.page) || 1;
+    await querySearchProduct(res, page, querySearchProducts, next);
+  } else {
+    const page = 1;
+    querySearchProducts = req.body.searchProduct;
+    res.redirect(`/search-products/?page=${page}`);
+  }
+};
+
+exports.getCheckOutMoMo = async (req, res, next) => {
+  var accessKey = 'F8BBA842ECF85';
+  var secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
+  var orderInfo = 'pay with MoMo';
+  var partnerCode = 'MOMO';
+  var redirectUrl = `${req.protocol}://${req.get('host')}/order`;
+  var ipnUrl = 'https://690b-171-239-130-166.ngrok-free.app/callback-momo';
+  var requestType = 'captureWallet';
+  var amount = req.total;
+  var orderId = partnerCode + new Date().getTime();
+  var requestId = orderId;
+  var extraData = Buffer.from(
+    JSON.stringify({ user: req.user, total: req.total, fee: req.fee }),
+  ).toString('base64');
+  var orderGroupId = '';
+  var autoCapture = true;
+  var lang = 'vi';
+
+  var rawSignature =
+    'accessKey=' +
+    accessKey +
+    '&amount=' +
+    amount +
+    '&extraData=' +
+    extraData +
+    '&ipnUrl=' +
+    ipnUrl +
+    '&orderId=' +
+    orderId +
+    '&orderInfo=' +
+    orderInfo +
+    '&partnerCode=' +
+    partnerCode +
+    '&redirectUrl=' +
+    redirectUrl +
+    '&requestId=' +
+    requestId +
+    '&requestType=' +
+    requestType;
+  //puts raw signature
+
+  //signature
+  const crypto = require('crypto');
+  var signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(rawSignature)
+    .digest('hex');
+
+  //json object send to MoMo endpoint
+  const requestBody = JSON.stringify({
+    partnerCode: partnerCode,
+    partnerName: 'Test',
+    storeId: 'MomoTestStore',
+    requestId: requestId,
+    amount: amount,
+    orderId: orderId,
+    orderInfo: orderInfo,
+    redirectUrl: redirectUrl,
+    ipnUrl: ipnUrl,
+    lang: lang,
+    requestType: requestType,
+    autoCapture: autoCapture,
+    extraData: extraData,
+    orderGroupId: orderGroupId,
+    signature: signature,
+  });
+  //Create the HTTPS objects
+  const result = await fetch(
+    'https://test-payment.momo.vn/v2/gateway/api/create',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(requestBody),
+      },
+      body: requestBody,
+    },
+  );
+  const json = await result.json();
+  res.status(201).json({ result: json });
+};
+
+exports.callbackMoMo = async (req, res) => {
+  console.log('body đâu', req.body);
+  if (req.body.resultCode === 0) {
+    const userData = JSON.parse(
+      Buffer.from(req.body.extraData, 'base64').toString('utf-8'),
+    );
+    const pool = await connect;
+    const userCartResult = await pool
+      .request()
+      .input('userId', sql.Int, userData.user.USER_ID)
+      .query(
+        `SELECT a.* FROM CART_PRODUCTS a, CARTS b WHERE a.CART_ID = b.CART_ID AND b.USER_ID = @userId `,
+      );
+    const listProducts = userCartResult.recordset;
+    if (listProducts.length > 0) {
+      const products = await Promise.all(
+        listProducts.map(async (item) => {
+          const productResult = await pool
+            .request()
+            .input('productId', sql.Int, item.PRODUCT_ID)
+            .query(`SELECT * FROM PRODUCTS WHERE PRODUCT_ID = @productId`);
+          const product = productResult.recordset[0];
+          return {
+            quantity: item.QUANTITY,
+            product: product,
+          };
+        }),
+      );
+      const orderQuery = `
+          INSERT INTO ORDERS (USER_ID, USER_EMAIL, FEE,TRANSPORT_FEE)
+          OUTPUT Inserted.ORDER_ID
+          VALUES (@userId, @userEmail, @fee,@transport)
+        `;
+      const orderResult = await pool
+        .request()
+        .input('userId', sql.Int, userData.user.USER_ID)
+        .input('userEmail', sql.NVarChar, userData.user.EMAIL)
+        .input('fee', sql.Float, userData.total)
+        .input('transport', sql.Float, userData.fee)
+        .query(orderQuery);
+      const orderId = orderResult.recordset[0].ORDER_ID;
+      for (const item of products) {
+        await pool
+          .request()
+          .input('orderId', sql.Int, orderId)
+          .input('productId', sql.Int, item.product.PRODUCT_ID)
+          .input('quantity', sql.Int, item.quantity).query(`
+              INSERT INTO ORDER_PRODUCTS (ORDER_ID, PRODUCT_ID, QUANTITY)
+              VALUES (@orderId, @productId, @quantity)
+            `);
+      }
+    }
+    await clearCart(userData.user);
+  }
+
+  return res.status(204).json(req.body);
 };

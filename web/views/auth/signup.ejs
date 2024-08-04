@@ -49,6 +49,26 @@
                     />
                   </div>
                   <div class="auth__form-control">
+                    <label for="phone">Số điện thoại</label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      placeholder="Nhập số điện thoại"
+                      class="auth__search <%= validationErrors.find(err => err.path === 'phone') ? 'invalid' : '' %>"
+                      value="<%= oldInput.phone %>"
+                    />
+                  </div>
+                  <div class="auth__form-control">
+                    <label for="address">Địa chỉ giao hàng</label>
+                    <input
+                      id="address"
+                      name="address"
+                      placeholder="Nhập địa chỉ"
+                      class="auth__search <%= validationErrors.find(err => err.path === 'address') ? 'invalid' : '' %>"
+                      value="<%= oldInput.address %>"
+                    />
+                  </div>
+                  <div class="auth__form-control">
                     <label for="password">Mật khẩu</label>
                     <input
                       id="password"

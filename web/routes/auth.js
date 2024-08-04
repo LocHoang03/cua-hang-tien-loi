@@ -9,7 +9,7 @@ router.get('/login', authController.getLogin);
 router.get('/signup', authController.getSignUp);
 router.get('/new-password', authController.getNewPassword);
 router.get('/reset-password', authController.getResetPassword);
-router.get('/change-password', authController.getChangePassword);
+router.get('/information', authController.getChangePassword);
 
 router.post('/logout', auth.isAuth, authController.postLogout);
 
@@ -119,6 +119,8 @@ router.post(
         }
       })
       .normalizeEmail(),
+    body('phone', 'Vui lòng nhập số điện thoại!').isMobilePhone(),
+    body('address', 'Vui lòng nhập địa chỉ giao hàng!').isString().trim(),
     body(
       'password',
       'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự.',
@@ -135,6 +137,36 @@ router.post(
     }),
   ],
   authController.postSignup,
+);
+
+router.post(
+  '/change-information',
+  [
+    body('name', 'Vui lòng nhập tên của bạn!(Ít nhất 3 ký tự.)')
+      .isString()
+      .isLength({ min: 3 })
+      .trim(),
+
+    body('phone', 'Vui lòng nhập số điện thoại!')
+      .isMobilePhone()
+      .custom(async (value, { req }) => {
+        const pool = await connect;
+        const user = await pool
+          .request()
+          .input('phone', sql.NVarChar, value)
+          .input('userId', sql.Int, req.body.userId)
+          .query(
+            `SELECT * FROM USERS a WHERE PHONE = @phone AND USER_ID != @userId`,
+          );
+        if (user.recordset.length > 0) {
+          return Promise.reject(
+            'Số điện thoại đã tồn tại vui lòng nhập số điện thoại khác!!',
+          );
+        }
+      }),
+    body('address', 'Vui lòng nhập địa chỉ giao hàng!').isString().trim(),
+  ],
+  authController.postChangeInformation,
 );
 
 module.exports = router;

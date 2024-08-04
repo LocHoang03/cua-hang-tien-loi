@@ -163,10 +163,45 @@ async function clearCart(user) {
   }
 }
 
+// update cart
+
+async function getUserCart(userId) {
+  let pool = await connect;
+  let result = await pool
+    .request()
+    .input('userId', sql.Int, userId)
+    .query('SELECT * FROM CARTS WHERE USER_ID = @userId');
+
+  if (result.recordset.length === 0) {
+    return null;
+  }
+  return result.recordset[0].CART_ID;
+}
+
+async function updateUserCart(userId, orderData) {
+  const cartId = await getUserCart(userId);
+  if (cartId) {
+    let pool = await connect;
+    let promises = orderData.map((order) => {
+      return pool
+        .request()
+        .input('cartId', sql.Int, cartId)
+        .input('productId', sql.Int, order.PRODUCT_ID)
+        .input('quantity', sql.Int, order.QUANTITY)
+        .query(`INSERT INTO CART_PRODUCTS (CART_ID, PRODUCT_ID, QUANTITY) 
+                VALUES (@cartId, @productId, @quantity)`);
+    });
+
+    await Promise.all(promises);
+  }
+}
+
 module.exports = {
   clearCart,
   decreaseQuantity,
   increaseQuantity,
   deleteCartItem,
   addToCart,
+  getUserCart,
+  updateUserCart,
 };

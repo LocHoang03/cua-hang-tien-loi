@@ -27,6 +27,7 @@ exports.getSignUp = (req, res, next) => {
     oldInput: {
       name: '',
       email: '',
+      phone: '',
       password: '',
       confirmPassword: '',
     },
@@ -76,7 +77,7 @@ exports.getResetPassword = (req, res, next) => {
 
 exports.getChangePassword = (req, res, next) => {
   res.render('auth/change-password', {
-    pageTitle: 'Đổi mật khẩu',
+    pageTitle: 'Thông tin cá nhân',
     path: '/auth/change-password',
     errorMessage: null,
     validationErrors: [],
@@ -152,6 +153,8 @@ exports.postLogin = async (req, res, next) => {
 exports.postSignup = async (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
+  const phone = req.body.phone;
+  const address = req.body.address;
   const password = req.body.password;
 
   const errors = validationResult(req);
@@ -164,6 +167,8 @@ exports.postSignup = async (req, res, next) => {
       oldInput: {
         name: req.body.name,
         email: req.body.email,
+        phone: req.body.phone,
+        phone: req.body.address,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
       },
@@ -178,11 +183,12 @@ exports.postSignup = async (req, res, next) => {
       .request()
       .input('Name', sql.NVarChar, name)
       .input('Email', sql.NVarChar, email)
-      .input('Password', sql.NVarChar, hashPassword)
-      .input('ROLE', sql.NVarChar, 'user').query(`
-      INSERT INTO USERS (NAME, EMAIL, PASSWORD, ROLE)
+      .input('Phone', sql.NVarChar, phone)
+      .input('Address', sql.NVarChar, address)
+      .input('Password', sql.NVarChar, hashPassword).query(`
+      INSERT INTO USERS (NAME, EMAIL,PHONE,ADDRESS,PASSWORD)
       OUTPUT INSERTED.USER_ID AS UserId
-      VALUES (@Name, @Email, @Password, @ROLE)
+      VALUES (@Name, @Email, @Phone,@Address,@Password)
     `);
 
     const userId = user.recordset[0].UserId;
@@ -199,17 +205,51 @@ exports.postSignup = async (req, res, next) => {
       html: '<h1> Congratulations, you have successfully registered an account </h1>',
     });
   } catch (error) {
-    console.log(error);
     next(new Error(error));
+  }
+};
+
+exports.postChangeInformation = async (req, res, next) => {
+  const name = req.body.name;
+  const phone = req.body.phone;
+  const address = req.body.address;
+  const userId = req.body.userId;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      success: false,
+      msg: errors.array()[0].msg,
+    });
+  }
+
+  try {
+    const pool = await connect;
+    const user = await pool
+      .request()
+      .input('Name', sql.NVarChar, name)
+      .input('Phone', sql.NVarChar, phone)
+      .input('Address', sql.NVarChar, address)
+      .input('userId', sql.Int, userId).query(`
+      UPDATE USERS SET NAME = @name, PHONE = @phone, ADDRESS = @Address
+      WHERE USER_ID = @userId
+    `);
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    res.status(201).json({
+      success: false,
+      msg: 'Server đang gặp lỗi. Xin vui lòng thử lại sau',
+    });
   }
 };
 
 exports.postChangePassword = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/change-password', {
-      pageTitle: 'Đổi mật khẩu',
-      path: '/auth/change-password',
+    return res.status(422).render('auth/information', {
+      pageTitle: 'Thông tin cá nhân',
+      path: '/auth/information',
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array(),
       oldInput: {
@@ -224,49 +264,65 @@ exports.postChangePassword = async (req, res, next) => {
     const pool = await connect;
     const result = await pool
       .request()
-      .input('UserId', sql.Int, userId)
+      .input('UserId', sql.Int, req.user.USER_ID)
       .query('SELECT * FROM USERS WHERE USER_ID = @UserId');
 
     const user = result.recordset[0];
 
     if (!user) {
-      return res.status(422).render('auth/change-password', {
-        pageTitle: 'Đổi mật khẩu',
-        path: '/auth/change-password',
+      return res.status(422).render('auth/information', {
+        pageTitle: 'Thông tin cá nhân',
+        path: '/auth/information',
         errorMessage: 'Người dùng không tìm thấy.',
         validationErrors: [],
-        oldInput: { oldPassword, newPassword, newConfirmPassword },
+        oldInput: {
+          oldPassword: req.body.oldPassword,
+          newPassword: req.body.newPassword,
+          newConfirmPassword: req.body.newConfirmPassword,
+        },
       });
     }
 
-    const isMatch = await bcrypt.compare(oldPassword, user.Password);
+    const isMatch = await bcrypt.compare(
+      req.body.oldPassword,
+      req.user.PASSWORD,
+    );
 
     if (!isMatch) {
-      return res.status(422).render('auth/change-password', {
-        pageTitle: 'Đổi mật khẩu',
-        path: '/auth/change-password',
+      return res.status(422).render('auth/information', {
+        pageTitle: 'Thông tin cá nhân',
+        path: '/auth/information',
         errorMessage: 'Mật khẩu cũ không đúng.',
         validationErrors: [],
-        oldInput: { oldPassword, newPassword, newConfirmPassword },
+        oldInput: {
+          oldPassword: req.body.oldPassword,
+          newPassword: req.body.newPassword,
+          newConfirmPassword: req.body.newConfirmPassword,
+        },
       });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    const hashedPassword = await bcrypt.hash(req.body.newPassword, 12);
 
     await pool
       .request()
-      .input('UserId', sql.Int, userId)
+      .input('UserId', sql.Int, req.user.USER_ID)
       .input('Password', sql.NVarChar, hashedPassword)
-      .query('UPDATE Users SET Password = @Password WHERE Id = @UserId');
+      .query('UPDATE USERS SET PASSWORD = @Password WHERE USER_ID = @UserId');
 
-    res.redirect('/');
+    res.redirect('/auth/information');
   } catch (error) {
-    res.status(422).render('auth/change-password', {
-      pageTitle: 'Đổi mật khẩu',
-      path: '/auth/change-password',
+    console.log(error);
+    res.status(422).render('auth/information', {
+      pageTitle: 'Thông tin cá nhân',
+      path: '/auth/information',
       errorMessage: 'Đã xảy ra lỗi vui lòng thực hiện lại sau!',
       validationErrors: [],
-      oldInput: { oldPassword, newPassword, newConfirmPassword },
+      oldInput: {
+        oldPassword: req.body.oldPassword,
+        newPassword: req.body.newPassword,
+        newConfirmPassword: req.body.newConfirmPassword,
+      },
     });
   }
 };

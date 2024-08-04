@@ -14,16 +14,15 @@ router.get('/detail-product/:productId', shopController.getDetailProduct);
 router.get('/products/:typeProduct', shopController.getTypeProductsShop);
 router.get('/cart', auth.isAuth, shopController.getCart);
 router.get('/order', auth.isAuth, shopController.getOrder);
-// router.get('/order', auth.isAuth, shopController.getOrder);
-// router.get('/invoice/:orderId', shopController.getInvoice);
+router.get('/invoice/:orderId', shopController.getInvoice);
 router.post('/cart', auth.isAuth, shopController.postCart);
-// router.post(
-//   '/repurchase-product',
-//   auth.isAuth,
-//   shopController.postRepurchaseProduct,
-// );
-// router.get('/search-products', shopController.SearchProducts);
-// router.post('/search-products', shopController.SearchProducts);
+router.post(
+  '/repurchase-product',
+  auth.isAuth,
+  shopController.postRepurchaseProduct,
+);
+router.get('/search-products', shopController.SearchProducts);
+router.post('/search-products', shopController.SearchProducts);
 router.patch(
   '/increase-quantity/:productId',
   auth.isAuth,
@@ -48,8 +47,9 @@ router.delete(
 );
 
 router.get('/get-checkout', shopController.getCheckOut);
+router.post('/get-checkout-momo', shopController.getCheckOutMoMo);
+router.post('/callback-momo', shopController.callbackMoMo);
+
 router.post('/create-checkout-session', shopController.createCheckout);
 
-router.get('/session-status', shopController.sessionStatus);
-// router.post('/create-checkout-session', shopController.createCheckout);
 module.exports = router;

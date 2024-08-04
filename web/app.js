@@ -10,7 +10,7 @@ const { formatCurrency } = require('./util/formatPrice');
 const config = {
   user: process.env.user || 'sa',
   password: process.env.password || '123',
-  server: process.env.server || 'MSI\\SQLEXPRESS',
+  server: process.env.server || 'LAPTOP-FI6VC23H\\SQLEXPRESS',
   database: process.env.name_BD || 'DB_QLCHTL',
   options: {
     encrypt: false,
@@ -70,6 +70,7 @@ app.use(async (req, res, next) => {
     }
     const user = userResult.recordset[0];
     req.user = user;
+    res.locals.userInfo = user;
     const nameUser =
       user &&
       user.NAME &&
@@ -101,15 +102,12 @@ app.use(async (req, res, next) => {
     if (count > 0) {
       fee = 15000 + 5000 * Math.floor((count - 1) / 3);
     }
-<<<<<<< HEAD
-    res.locals.count = count;
     req.fee = fee;
     req.total = fee + price;
-=======
-    res.locals.count = fee;
-    req.fee = fee;
+    res.locals.fee = fee;
+    res.locals.count = count;
+    res.locals.total = fee + price;
 
->>>>>>> defa6b5922f103a29d7dccbb763dec8209e5f197
     next();
   } catch (err) {
     next(new Error(err));
