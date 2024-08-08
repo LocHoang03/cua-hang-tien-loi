@@ -1,4 +1,0 @@
-D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\PhoneTextBox\bin\Debug\PhoneTextBox.dll
-D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\PhoneTextBox\bin\Debug\PhoneTextBox.pdb
-D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\PhoneTextBox\obj\Debug\PhoneTextBox.dll
-D:\GitHub\cua-hang-tien-loi\app\QL_CUAHANGTIENLOI\PhoneTextBox\obj\Debug\PhoneTextBox.pdb
